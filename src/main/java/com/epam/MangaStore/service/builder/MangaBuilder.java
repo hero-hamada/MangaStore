@@ -33,7 +33,7 @@ public class MangaBuilder {
         manga.setTitle(request.getParameter(TITLE));
         manga.setDescription(request.getParameter(DESCRIPTION));
         manga.setReleaseDate(Date.valueOf(request.getParameter(RELEASE_DATE)));
-        manga.setReleasingStatusID(Integer.valueOf(request.getParameter(RELEASING_STATUS_ID)));
+        manga.setReleaseStatusID(Integer.valueOf(request.getParameter(RELEASING_STATUS_ID)));
         manga.setLanguageID(Integer.valueOf(request.getParameter(LANGUAGE_ID)));
         manga.setAccessStatusID(ACCESS_STATUS_ACTIVE_ID);
         manga.setCoverID(DEFAULT_COVER_ID);
@@ -49,7 +49,7 @@ public class MangaBuilder {
         Manga manga = mangaDAO.selectByID(mangaID);
         manga.setAuthors(authorDAO.selectAllAuthorsByMangaID(mangaID));
         manga.setGenres(genreDAO.selectGenresByMangaLanguageID(mangaID, localID));
-        manga.setReleasingStatus(releasingStatusDAO.selectByID(manga.getReleasingStatusID(), localID));
+        manga.setReleaseStatus(releasingStatusDAO.selectByID(manga.getReleaseStatusID(), localID));
         manga.setPublisher(publisherDAO.selectByID(manga.getPublisherID()));
         setCover(manga, manga.getCoverID());
         return manga;
@@ -98,7 +98,7 @@ public class MangaBuilder {
 
     private void fillGiven(List<Manga> mangas, Integer localID) throws SQLException {
         for (Manga manga : mangas) {
-            manga.setReleasingStatus(releasingStatusDAO.selectByID(manga.getReleasingStatusID(), localID));
+            manga.setReleaseStatus(releasingStatusDAO.selectByID(manga.getReleaseStatusID(), localID));
             setCover(manga, manga.getCoverID());
         }
     }

@@ -84,7 +84,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public Order selectByID(Long orderID) throws SQLException {
+    public Order selectOrderByID(Long orderID) throws SQLException {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
         Order order = null;

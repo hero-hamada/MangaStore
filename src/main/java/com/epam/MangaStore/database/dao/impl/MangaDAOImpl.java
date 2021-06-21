@@ -40,7 +40,7 @@ public class MangaDAOImpl implements MangaDAO {
         manga.setReleaseDate(resultSet.getDate("release_date"));
         manga.setLanguageID(resultSet.getInt("language_id"));
         manga.setPublisherID(resultSet.getLong("publisher_id"));
-        manga.setReleasingStatusID(resultSet.getInt("releasing_status_id"));
+        manga.setReleaseStatusID(resultSet.getInt("releasing_status_id"));
         manga.setAccessStatusID(resultSet.getInt("access_status_id"));
         manga.setCoverID(resultSet.getLong("cover_id"));
         return manga;
@@ -58,7 +58,7 @@ public class MangaDAOImpl implements MangaDAO {
             preparedStatement.setInt(4, manga.getLanguageID());
             preparedStatement.setLong(5, manga.getPublisherID());
             preparedStatement.setLong(6, manga.getCoverID());
-            preparedStatement.setInt(7, manga.getReleasingStatusID());
+            preparedStatement.setInt(7, manga.getReleaseStatusID());
             preparedStatement.setInt(8, manga.getAccessStatusID());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -82,7 +82,7 @@ public class MangaDAOImpl implements MangaDAO {
             preparedStatement.setInt(4, manga.getLanguageID());
             preparedStatement.setLong(5, manga.getPublisherID());
             preparedStatement.setLong(6, manga.getCoverID());
-            preparedStatement.setInt(7, manga.getReleasingStatusID());
+            preparedStatement.setInt(7, manga.getReleaseStatusID());
             preparedStatement.setInt(8, manga.getAccessStatusID());
             preparedStatement.setLong(9, manga.getId());
             preparedStatement.executeUpdate();

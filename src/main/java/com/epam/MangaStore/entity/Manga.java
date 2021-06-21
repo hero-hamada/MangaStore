@@ -9,8 +9,8 @@ public class Manga extends Book {
     private Integer languageID;
     private Long publisherID;
     private Publisher publisher;
-    private Integer releasingStatusID;
-    private ReleasingStatus releasingStatus;
+    private Integer releaseStatusID;
+    private ReleasingStatus releaseStatus;
     private List<Volume> volumes;
     private List<Author> authors;
     private List<Genre> genres;
@@ -39,12 +39,12 @@ public class Manga extends Book {
         this.genres = genres;
     }
 
-    public void setReleasingStatusID(Integer releasingStatusID) {
-        this.releasingStatusID = releasingStatusID;
+    public void setReleaseStatusID(Integer releaseStatusID) {
+        this.releaseStatusID = releaseStatusID;
     }
 
-    public void setReleasingStatus(ReleasingStatus releasingStatus) {
-        this.releasingStatus = releasingStatus;
+    public void setReleaseStatus(ReleasingStatus releaseStatus) {
+        this.releaseStatus = releaseStatus;
     }
 
     public void setPublisherID(Long publisherID) {
@@ -75,12 +75,12 @@ public class Manga extends Book {
         return genres;
     }
 
-    public Integer getReleasingStatusID() {
-        return releasingStatusID;
+    public Integer getReleaseStatusID() {
+        return releaseStatusID;
     }
 
-    public ReleasingStatus getReleasingStatus() {
-        return releasingStatus;
+    public ReleasingStatus getReleaseStatus() {
+        return releaseStatus;
     }
 
     public Long getPublisherID() {
@@ -93,12 +93,12 @@ public class Manga extends Book {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Manga manga = (Manga) o;
-        return description.equals(manga.description) && languageID.equals(manga.languageID) && publisherID.equals(manga.publisherID) && publisher.equals(manga.publisher) && releasingStatusID.equals(manga.releasingStatusID) && releasingStatus.equals(manga.releasingStatus) && volumes.equals(manga.volumes) && authors.equals(manga.authors) && genres.equals(manga.genres);
+        return description.equals(manga.description) && languageID.equals(manga.languageID) && publisherID.equals(manga.publisherID) && publisher.equals(manga.publisher) && releaseStatusID.equals(manga.releaseStatusID) && releaseStatus.equals(manga.releaseStatus) && volumes.equals(manga.volumes) && authors.equals(manga.authors) && genres.equals(manga.genres);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), description, languageID, publisherID, publisher, releasingStatusID, releasingStatus, volumes, authors, genres);
+        return Objects.hash(super.hashCode(), description, languageID, publisherID, publisher, releaseStatusID, releaseStatus, volumes, authors, genres);
     }
 
     @Override
@@ -108,8 +108,8 @@ public class Manga extends Book {
                 ", languageID=" + languageID +
                 ", publisherID=" + publisherID +
                 ", publisher=" + publisher +
-                ", releasingStatusID=" + releasingStatusID +
-                ", releasingStatus=" + releasingStatus +
+                ", releasingStatusID=" + releaseStatusID +
+                ", releasingStatus=" + releaseStatus +
                 ", volumes=" + volumes +
                 ", authors=" + authors +
                 ", genres=" + genres +

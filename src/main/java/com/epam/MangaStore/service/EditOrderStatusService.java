@@ -39,7 +39,7 @@ public class EditOrderStatusService implements Service {
         Integer orderStatusID = Integer.valueOf(request.getParameter(ORDER_STATUS_ID));
         Long orderID = Long.valueOf(request.getParameter(ORDER_ID));
 
-        if (orderDAO.selectByID(orderID) != null && orderStatusDAO.selectByID(orderStatusID, localeID) != null) {
+        if (orderDAO.selectOrderByID(orderID) != null && orderStatusDAO.selectOrderStatusByID(orderStatusID, localeID) != null) {
             orderDAO.updateOrderStatus(orderID, orderStatusID);
         }
 

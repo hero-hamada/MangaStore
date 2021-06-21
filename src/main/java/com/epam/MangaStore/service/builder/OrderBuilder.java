@@ -45,7 +45,7 @@ public class OrderBuilder {
         List<Order> orders = orderDAO.selectUserOrders(userID);
         for (Order order : orders) {
             order.setOrderItems(orderItemBuilder.fillOrderItems(order.getId()));
-            order.setStatus(orderStatusDAO.selectByID(order.getStatusID(), localID));
+            order.setStatus(orderStatusDAO.selectOrderStatusByID(order.getStatusID(), localID));
         }
         return orders;
     }
@@ -55,7 +55,7 @@ public class OrderBuilder {
         for (Order order : orders) {
 
             order.setOrderItems(orderItemBuilder.fillOrderItems(order.getId()));
-            order.setStatus(orderStatusDAO.selectByID(order.getStatusID(), localID));
+            order.setStatus(orderStatusDAO.selectOrderStatusByID(order.getStatusID(), localID));
             order.setUser(userDAO.selectByID(order.getUserID()));
         }
         return orders;

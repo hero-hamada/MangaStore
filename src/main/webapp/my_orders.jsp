@@ -76,9 +76,10 @@
                                                         </div>
                                                     </div>
                                                     <div>
-                                                        <b class="text-success">${orderItem.quantity} <fmt:message
-                                                                key="b.pieces.short"/></b> x
-                                                        <b class="text-danger"> ${orderItem.fixedPrice} ₸</b>
+                                                        <b class="text-success">${orderItem.quantity}
+                                                            <fmt:message key="b.pieces.short"/></b> x
+                                                        <b class="text-danger"> ${orderItem.fixedPrice}
+                                                            <fmt:message key="span.currency.tenge"/></b>
                                                     </div>
                                                 </li>
                                             </ul>

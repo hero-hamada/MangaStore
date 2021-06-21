@@ -44,13 +44,13 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
         return orderStatuses;
     }
 
-    public OrderStatus selectByID(Integer statusID, Integer sessionLanguageID) throws SQLException {
+    public OrderStatus selectOrderStatusByID(Integer statusID, Integer localeID) throws SQLException {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
         OrderStatus orderStatus = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDER_STATUS_BY_ID)) {
             preparedStatement.setLong(1, statusID);
-            preparedStatement.setInt(2, sessionLanguageID);
+            preparedStatement.setInt(2, localeID);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 orderStatus = getMangaStatusByResultSet(resultSet);
