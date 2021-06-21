@@ -29,6 +29,9 @@
             <c:if test="${not empty requestScope.emailFormatError}">
                 <small class="form-text text-danger"><fmt:message key="small.error.email.format"/></small>
             </c:if>
+            <c:if test="${not empty requestScope.emailExistsError}">
+                <small class="form-text text-danger"><fmt:message key="small.error.email.format"/></small>
+            </c:if>
         </div>
         <div class="form-group">
             <label><fmt:message key="label.password.old"/></label>

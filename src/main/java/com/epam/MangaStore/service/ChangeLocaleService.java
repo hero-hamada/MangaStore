@@ -25,9 +25,10 @@ public class ChangeLocaleService implements Service {
         String selectedLocale = request.getParameter(LOCALE);
 
         Integer languageID = languageDAO.selectIdByName(selectedLocale);
-        session.setAttribute(LOCALE, selectedLocale);
-        session.setAttribute(LOCALE_ID, languageID);
-
+        if (languageID != null) {
+            session.setAttribute(LOCALE, selectedLocale);
+            session.setAttribute(LOCALE_ID, languageID);
+        }
         response.sendRedirect(request.getHeader(REFERER));
     }
 }

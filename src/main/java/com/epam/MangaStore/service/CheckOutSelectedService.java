@@ -24,7 +24,6 @@ public class CheckOutSelectedService implements Service {
 
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CartItemBuilder cartItemBuilder = CartItemBuilder.getInstance();
-    private CartItemValidator cartItemValidator = CartItemValidator.getInstance();
     private RequestDispatcher dispatcher;
 
     @Override

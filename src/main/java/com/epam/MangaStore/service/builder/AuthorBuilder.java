@@ -20,7 +20,7 @@ public class AuthorBuilder {
 
     public Author fillToUpdate(HttpServletRequest request) {
         Author author = fillNew(request);
-        author.setId(Long.valueOf(request.getParameter(AUTHOR_ID).trim()));
+        author.setId(Long.valueOf(request.getParameter(AUTHOR_ID)));
         return author;
     }
 

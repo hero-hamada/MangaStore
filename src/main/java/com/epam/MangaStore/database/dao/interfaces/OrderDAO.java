@@ -14,4 +14,6 @@ public interface OrderDAO {
     List<Order> selectAll() throws SQLException;
 
     void updateOrderStatus(Long orderID, Integer statusID) throws SQLException;
+
+    Order selectByID(Long orderID) throws SQLException;
 }

@@ -44,7 +44,7 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
         return orderStatuses;
     }
 
-    public OrderStatus selectOrderStatusByID(Integer statusID, Integer sessionLanguageID) throws SQLException {
+    public OrderStatus selectByID(Integer statusID, Integer sessionLanguageID) throws SQLException {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
         OrderStatus orderStatus = null;

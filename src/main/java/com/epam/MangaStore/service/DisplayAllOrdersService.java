@@ -30,20 +30,18 @@ public class DisplayAllOrdersService implements Service {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 
         HttpSession session = request.getSession();
+        Integer localeID = (Integer) session.getAttribute(LOCALE_ID);
 
         if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
             dispatcher = request.getRequestDispatcher(ERROR_JSP);
             dispatcher.forward(request, response);
         }
 
-        Integer localID = (Integer) session.getAttribute(LOCALE_ID);
-
-        List<Order> orders = orderBuilder.fillAllOrders(localID);
-        List<OrderStatus> orderStatuses = orderStatusDAO.selectAll(localID);
+        List<Order> orders = orderBuilder.fillAllOrders(localeID);
+        List<OrderStatus> orderStatuses = orderStatusDAO.selectAll(localeID);
 
         request.setAttribute(ORDERS, orders);
         request.setAttribute(ORDER_STATUSES, orderStatuses);
-
         dispatcher = request.getRequestDispatcher(ORDERS_JSP);
         dispatcher.forward(request, response);
     }

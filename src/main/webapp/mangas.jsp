@@ -69,7 +69,7 @@
                             <img class="card-img-top" src="data:image/jpeg;base64,${manga.cover}"/>
                             <div class="card-body">
                                 <h6 class="card-title">${manga.title}</h6>
-                                <p class="card-text text-primary">${manga.status.name}</p>
+                                <p class="card-text text-primary">${manga.releasingStatus.name}</p>
                                 <c:if test="${sessionScope.user.roleID eq Constants.roleAdminID}">
                                     <form action="DisplayAllVolumes" method="get">
                                         <input type="hidden" name="mangaID" value="${manga.id}">

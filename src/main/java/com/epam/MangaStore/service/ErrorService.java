@@ -12,9 +12,11 @@ import static com.epam.MangaStore.constants.Constants.ERROR_JSP;
 
 public class ErrorService implements Service {
 
+    private RequestDispatcher dispatcher;
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher(ERROR_JSP);
+        dispatcher = request.getRequestDispatcher(ERROR_JSP);
         dispatcher.forward(request, response);
     }
 }

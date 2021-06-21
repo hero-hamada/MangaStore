@@ -39,7 +39,7 @@ public class SetQuantityService implements Service {
         User user = (User) session.getAttribute(USER);
         CartItem cartItem = cartItemBuilder.fillToUpdate(request);
 
-        if (cartItem.getQuantity() > DEFAULT_VOLUME_QUANTITY && cartItem.getUserID().equals(user.getId())) {
+        if (cartItem.getQuantity() > DEFAULT_CART_ITEM_QUANTITY && cartItem.getUserID().equals(user.getId())) {
             cartDAO.updateQuantity(cartItem);
         } else {
             request.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);

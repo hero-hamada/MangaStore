@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface OrderStatusDAO {
 
-    OrderStatus selectOrderStatusByID(Integer statusID, Integer sessionLanguageID) throws SQLException;
+    OrderStatus selectByID(Integer statusID, Integer sessionLanguageID) throws SQLException;
 
     List<OrderStatus> selectAll(Integer sessionLanguageID) throws SQLException;
 

@@ -31,13 +31,15 @@ public class EditPublisherService implements Service {
             dispatcher = request.getRequestDispatcher(ERROR_JSP);
             dispatcher.forward(request, response);
         }
-        if (request.getParameter(PUBLISHER_NAME).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(PUBLISHER_ID).length() == EMPTY_REQUEST_LENGTH
+
+        Publisher publisher = publisherBuilder.fillToUpdate(request);
+
+        if (publisher.getName().length() == EMPTY_REQUEST_LENGTH ||
+                publisherDAO.selectByID(publisher.getId()) == null
         ) {
             request.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
             serviceFactory.getService(DISPLAY_ALL_PUBLISHERS_SERVICES).execute(request, response);
         } else {
-            Publisher publisher = publisherBuilder.fillToUpdate(request);
             publisherDAO.update(publisher);
             serviceFactory.getService(DISPLAY_ALL_PUBLISHERS_SERVICES).execute(request, response);
         }

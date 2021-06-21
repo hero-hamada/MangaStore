@@ -10,9 +10,11 @@ public class Constants {
     public final static Integer LOCALE_RUSSIAN_ID = 2;
     public final static Integer ORDER_STATUS_IN_PROCESSING = 1;
     public final static Long DEFAULT_COVER_ID = 7L;
+    public final static Integer DEFAULT_CART_ITEM_QUANTITY = 1;
     public final static Integer GENRE_ALL_ID = 0;
     public final static Integer EMPTY_REQUEST_LENGTH = 0;
-
+    public final static Integer MIN_IMAGE_SIZE = 0;
+    public final static Integer MAX_IMAGE_SIZE = 10 * 1024 * 1024;
 
     public Integer getGenreIDAll() {
         return GENRE_ALL_ID;
@@ -42,12 +44,12 @@ public class Constants {
         return LOCALE_RUSSIAN_ID;
     }
 
-    public final static String ERROR_SERVICE = "/error";
-    public final static String REGISTER_SERVICE = "/register";
-    public final static String SIGN_IN_SERVICE = "/signIn";
-    public final static String SIGN_OUT_SERVICE = "/signOut";
+    public final static String ERROR_SERVICE = "/Error";
+    public final static String REGISTER_SERVICE = "/Register";
+    public final static String SIGN_IN_SERVICE = "/SignIn";
+    public final static String SIGN_OUT_SERVICE = "/SignOut";
     public final static String SEARCH_SERVICE = "/Search";
-    public final static String CHANGE_LOCALE_SERVICE = "/changeLocale";
+    public final static String CHANGE_LOCALE_SERVICE = "/ChangeLocale";
     public final static String ADD_VOLUME_SERVICE = "/AddVolume";
     public final static String ADD_MANGA_SERVICE = "/AddManga";
     public final static String ADD_NEW_AUTHOR_SERVICES = "/AddNewAuthor";
@@ -102,14 +104,14 @@ public class Constants {
     public final static String EDIT_AUTHORS_JSP = "edit_authors.jsp";
     public final static String EDIT_PUBLISHERS_JSP = "edit_publishers.jsp";
     public final static String EDIT_PROFILE_JSP = "edit_profile.jsp";
+
     public final static String LOGIN_ERROR = "loginError";
     public final static String EMAIL_ERROR = "emailError";
     public final static String EMAIL_FORMAT_ERROR = "emailFormatError";
-    public final static String EMAIL_EXISTS_ERROR = "passwordFormatError";
+    public final static String EMAIL_EXISTS_ERROR = "emailExistsError";
     public final static String PASSWORD_FORMAT_ERROR = "passwordFormatError";
-    public final static String NOT_OLD_PASSWORD_ERROR = "passwordFormatError";
-
     public final static String PASSWORD_ERROR = "passwordError";
+    public final static String NOT_OLD_PASSWORD_ERROR = "notOldPasswordError";
     public final static String EMAIL_PASSWORD_ERROR = "emailPasswordError";
     public final static String PHONE_ERROR = "phoneError";
     public final static String POSTAL_CODE_ERROR = "postalCodeError";
@@ -131,14 +133,13 @@ public class Constants {
     public final static String NOT_UNIQUE_AUTHOR_ERROR = "notUniqueAuthorError";
     public final static String NOT_UNIQUE_PUBLISHER_ERROR = "notUniquePublisherError";
     public final static String AUTHOR_NAME_ERROR = "authorNameError";
-    public final static Integer MIN_IMAGE_SIZE = 0;
-    public final static Integer MAX_IMAGE_SIZE = 10 * 1024 * 1024;
-    public final static String KEY_ERROR_NAME_FORMAT = "small.error.name.format";
+
+    public final static String KEY_ERROR_LOGIN_FORMAT = "small.error.name.format";
+    public final static String KEY_ERROR_LOGIN_EXISTS = "small.error.login.exists";
     public final static String KEY_ERROR_EMAIL_FORMAT = "small.error.email.format";
+    public final static String KEY_ERROR_EMAIL_EXISTS = "small.error.email.exists";
     public final static String KEY_ERROR_PASSWORD_FORMAT = "small.error.password.format";
     public final static String KEY_ERROR_PASSWORD_CONFIRM = "small.error.password.confirm";
-    public final static String KEY_ERROR_EMAIL_EXISTS = "small.error.email.exists";
-    public final static String KEY_ERROR_LOGIN_EXISTS = "small.error.login.exists";
     public final static String KEY_ERROR_SIGN_IN = "small.error.sign.in";
     public final static String KEY_ERROR_USER_NOT_EXISTS = "small.error.user.not.exists";
     public final static String KEY_ERROR_POSTAL_CODE_FORMAT = "small.error.postal.format";
@@ -180,7 +181,6 @@ public class Constants {
     public final static String NUMBER = "number";
     public final static String COVER = "cover";
     public final static String ACCESS_STATUS_ID = "accessStatusID";
-    public final static Integer DEFAULT_VOLUME_QUANTITY = 1;
     public final static String VOLUME = "volume";
     public final static String VOLUME_ID = "volumeID";
     public final static String COVER_ID = "coverID";

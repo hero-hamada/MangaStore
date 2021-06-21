@@ -39,13 +39,13 @@ public class CheckOutAllService implements Service {
 
         if (cartItems.size() == EMPTY_REQUEST_LENGTH) {
             serviceFactory.getService(DISPLAY_CART_SERVICE).execute(request, response);
+        } else {
+            Long totalPrice = cartItemBuilder.calculateTotalPrice(cartItems);
+            request.setAttribute(CART_ITEMS, cartItems);
+            request.setAttribute(CART_TOTAL_PRICE, totalPrice);
+            dispatcher = request.getRequestDispatcher(CONFIRM_ORDER_JSP);
+            dispatcher.forward(request, response);
         }
-
-        Long totalPrice = cartItemBuilder.calculateTotalPrice(cartItems);
-        request.setAttribute(CART_ITEMS, cartItems);
-        request.setAttribute(CART_TOTAL_PRICE, totalPrice);
-        dispatcher = request.getRequestDispatcher(CONFIRM_ORDER_JSP);
-        dispatcher.forward(request, response);
     }
 
 }

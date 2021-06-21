@@ -38,15 +38,12 @@ public class EditMangaService implements Service {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 
         HttpSession session = request.getSession();
+        Integer localID = (Integer) session.getAttribute(LOCALE_ID);
 
         if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
             dispatcher = request.getRequestDispatcher(ERROR_JSP);
             dispatcher.forward(request, response);
         }
-
-//        Long mangaID = Long.valueOf(request.getParameter(MANGA_ID));
-        Integer localID = (Integer) session.getAttribute(LOCALE_ID);
-//        request.setAttribute(MANGA, mangaBuilder.fillOneToDisplay(mangaID, localID));
 
         if (mangaValidator.isEmptyParamExists(request)) {
             displayErrorMessage(request, response, EMPTY_FIELD_ERROR);

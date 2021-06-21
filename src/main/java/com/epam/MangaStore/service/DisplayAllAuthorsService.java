@@ -34,7 +34,7 @@ public class DisplayAllAuthorsService implements Service {
 
         List<Author> authors = authorDAO.selectAll();
         request.setAttribute(AUTHORS, authors);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(EDIT_AUTHORS_JSP);
+        dispatcher = request.getRequestDispatcher(EDIT_AUTHORS_JSP);
         dispatcher.forward(request, response);
     }
 }

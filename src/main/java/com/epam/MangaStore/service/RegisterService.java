@@ -32,7 +32,7 @@ public class RegisterService implements Service {
         User user = userBuilder.fillNew(request);
 
         if (!isLoginFormatCorrect(user.getLogin())) {
-            displayErrorMessage(request, response, LOGIN_ERROR, KEY_ERROR_NAME_FORMAT);
+            displayErrorMessage(request, response, LOGIN_ERROR, KEY_ERROR_LOGIN_FORMAT);
         } else if (!isEmailFormatCorrect(user.getEmail())) {
             displayErrorMessage(request, response, EMAIL_ERROR, KEY_ERROR_EMAIL_FORMAT);
         } else if (!isPasswordFormatCorrect(request.getParameter(USER_PASSWORD))) {

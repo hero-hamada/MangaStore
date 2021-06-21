@@ -1,15 +1,11 @@
 package com.epam.MangaStore.service;
 
 import com.epam.MangaStore.database.dao.impl.GenreDAOImpl;
-import com.epam.MangaStore.database.dao.impl.MangaDAOImpl;
 import com.epam.MangaStore.database.dao.impl.ReleasingStatusDAOImpl;
 import com.epam.MangaStore.database.dao.interfaces.GenreDAO;
-import com.epam.MangaStore.database.dao.interfaces.MangaDAO;
 import com.epam.MangaStore.database.dao.interfaces.ReleasingStatusDAO;
 import com.epam.MangaStore.entity.Genre;
 import com.epam.MangaStore.entity.ReleasingStatus;
-import com.epam.MangaStore.service.factory.ServiceFactory;
-import com.epam.MangaStore.util.validator.AccessValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,7 +24,6 @@ public class PrepareMangasPageService implements Service {
     private ReleasingStatusDAO releasingStatusDAO = new ReleasingStatusDAOImpl();
     private GenreDAO genreDAO = new GenreDAOImpl();
     private RequestDispatcher dispatcher;
-
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {

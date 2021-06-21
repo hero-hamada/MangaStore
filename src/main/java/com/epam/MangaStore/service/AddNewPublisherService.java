@@ -41,7 +41,6 @@ public class AddNewPublisherService implements Service {
             request.setAttribute(NOT_UNIQUE_PUBLISHER_ERROR, ERROR_OCCURRED);
             serviceFactory.getService(DISPLAY_ALL_PUBLISHERS_SERVICES).execute(request, response);
         } else {
-
             publisherDAO.insert(publisher);
             serviceFactory.getService(DISPLAY_ALL_PUBLISHERS_SERVICES).execute(request, response);
         }

@@ -34,7 +34,7 @@ public class DisplayAllPublishersService implements Service {
 
         List<Publisher> publishers = publisherDAO.selectAll();
         request.setAttribute(PUBLISHERS, publishers);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(EDIT_PUBLISHERS_JSP);
+        dispatcher = request.getRequestDispatcher(EDIT_PUBLISHERS_JSP);
         dispatcher.forward(request, response);
     }
 }

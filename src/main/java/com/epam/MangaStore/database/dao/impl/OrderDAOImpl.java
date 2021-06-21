@@ -2,6 +2,7 @@ package com.epam.MangaStore.database.dao.impl;
 
 import com.epam.MangaStore.database.connection.ConnectionPool;
 import com.epam.MangaStore.database.dao.interfaces.OrderDAO;
+import com.epam.MangaStore.entity.Author;
 import com.epam.MangaStore.entity.Order;
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     private static final String SELECT_ORDERS_BY_USER_ID = "SELECT * FROM `order` WHERE user_id = ?";
     private static final String SELECT_ALL = "SELECT * FROM `order`";
+    private static final String SELECT_ORDER_BY_ID = "SELECT * FROM `order` WHERE id=?";
     private static final String INSERT_ORDER = "INSERT INTO `order` (user_id, order_status_id, total_price, created_date)" +
             " VALUES (?,?,?,?)";
     private static final String UPDATE_ORDER_STATUS_BY_ID = "UPDATE `order` SET order_status_id = ? WHERE id = ?";
@@ -79,6 +81,23 @@ public class OrderDAOImpl implements OrderDAO {
         } finally {
             connectionPool.returnConnection(connection);
         }
+    }
+
+    @Override
+    public Order selectByID(Long orderID) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        Order order = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDER_BY_ID)) {
+            preparedStatement.setLong(1, orderID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                order = getOrderByResultSet(resultSet);
+            }
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return order;
     }
 
     public List<Order> selectUserOrders(Long userID) throws SQLException {

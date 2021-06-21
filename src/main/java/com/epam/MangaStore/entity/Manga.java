@@ -27,10 +27,6 @@ public class Manga extends Book {
         this.publisher = publisher;
     }
 
-    public void setStatus(ReleasingStatus releasingStatus) {
-        this.releasingStatus = releasingStatus;
-    }
-
     public void setVolumes(List<Volume> volumes) {
         this.volumes = volumes;
     }
@@ -43,8 +39,12 @@ public class Manga extends Book {
         this.genres = genres;
     }
 
-    public void setReleaseStatusID(Integer releasingStatusID) {
+    public void setReleasingStatusID(Integer releasingStatusID) {
         this.releasingStatusID = releasingStatusID;
+    }
+
+    public void setReleasingStatus(ReleasingStatus releasingStatus) {
+        this.releasingStatus = releasingStatus;
     }
 
     public void setPublisherID(Long publisherID) {
@@ -63,10 +63,6 @@ public class Manga extends Book {
         return publisher;
     }
 
-    public ReleasingStatus getStatus() {
-        return releasingStatus;
-    }
-
     public List<Volume> getVolumes() {
         return volumes;
     }
@@ -79,8 +75,12 @@ public class Manga extends Book {
         return genres;
     }
 
-    public Integer getReleaseStatusID() {
+    public Integer getReleasingStatusID() {
         return releasingStatusID;
+    }
+
+    public ReleasingStatus getReleasingStatus() {
+        return releasingStatus;
     }
 
     public Long getPublisherID() {

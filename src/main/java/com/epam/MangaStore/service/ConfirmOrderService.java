@@ -33,7 +33,6 @@ public class ConfirmOrderService implements Service {
     private OrderDAO orderDAO = new OrderDAOImpl();
     private OrderItemDAO orderItemDAO = new OrderItemDAOImpl();
     private CartItemValidator cartItemValidator = CartItemValidator.getInstance();
-
     private RequestDispatcher dispatcher;
 
     @Override
@@ -54,7 +53,6 @@ public class ConfirmOrderService implements Service {
             request.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
             serviceFactory.getService(DISPLAY_CART_SERVICE).execute(request, response);
         } else {
-
             Order newOrder = orderBuilder.fillNew(user.getId(), cartItemIDs);
             Long newOrderID = orderDAO.insert(newOrder);
 
@@ -62,7 +60,6 @@ public class ConfirmOrderService implements Service {
                 orderItem.setOrderID(newOrderID);
                 orderItemDAO.insert(orderItem);
             }
-
             request.setAttribute(ORDER, newOrder);
             serviceFactory.getService(DISPLAY_MY_ORDERS_SERVICES).execute(request, response);
         }

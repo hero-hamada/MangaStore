@@ -46,7 +46,7 @@
         <div class="col-4 mt-3">
             <ul class="list-items">
                 <li><fmt:message key="li.releaseDate"/>: <span>${requestScope.manga.releaseDate}</span></li>
-                <li><fmt:message key="th.status"/>: <span class="text-success">${requestScope.manga.status.name}</span>
+                <li><fmt:message key="th.status"/>: <span class="text-success">${requestScope.manga.releasingStatus.name}</span>
                 </li>
                 <li><fmt:message key="th.publisherName"/>: <a href="#">${requestScope.manga.publisher.name}</a></li>
                 <li><fmt:message key="li.genres"/>:

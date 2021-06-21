@@ -33,11 +33,9 @@ public class DisplayCartService implements Service {
         }
 
         User user = (User) session.getAttribute(USER);
-
         List<CartItem> cartItems = cartItemBuilder.fillUserCartItems(user.getId());
 
         request.setAttribute(CART_ITEMS, cartItems);
-
         dispatcher = request.getRequestDispatcher(CART_JSP);
         dispatcher.forward(request, response);
     }

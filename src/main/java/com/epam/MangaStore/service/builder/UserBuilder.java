@@ -10,6 +10,7 @@ import static com.epam.MangaStore.constants.Constants.*;
 public class UserBuilder {
 
     private static UserBuilder instance = new UserBuilder();
+    public final static boolean NOT_BANNED = false;
 
     private UserBuilder() {
     }
@@ -22,7 +23,7 @@ public class UserBuilder {
         user.setAddress(request.getParameter(USER_ADDRESS).trim());
         user.setPhone(request.getParameter(USER_PHONE).trim());
         user.setRoleID(ROLE_USER_ID);
-        user.setBanned(false);
+        user.setBanned(NOT_BANNED);
         user.setStatusID(ACCESS_STATUS_ACTIVE_ID);
         user.setPassword(DigestUtils.md5Hex(request.getParameter(USER_PASSWORD)));
         user.setConfirmPassword(DigestUtils.md5Hex(request.getParameter(CONFIRM_PASSWORD)));

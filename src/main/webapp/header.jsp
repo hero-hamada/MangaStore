@@ -56,7 +56,7 @@
             <c:if test="${not empty sessionScope.user}">
                 <c:if test="${sessionScope.user.roleID eq Constants.roleUserID}">
                     <form action="DisplayCart" method="get">
-                        <input type="hidden" name="direction" value="cartItem.jsp">
+                        <input type="hidden" name="direction" value="cart.jsp">
                         <button type="submit" class="btn btn-outline-primary">
                             <i class="fas fa-shopping-cart"></i>
                         </button>

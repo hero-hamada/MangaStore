@@ -32,20 +32,20 @@ public class DisplayAllVolumesService implements Service {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 
         HttpSession session = request.getSession();
+        Integer localeID = (Integer) session.getAttribute(LOCALE_ID);
 
         if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
             dispatcher = request.getRequestDispatcher(SIGN_IN_JSP);
             dispatcher.forward(request, response);
         }
 
-        Integer localeID = (Integer) session.getAttribute(LOCALE_ID);
         Long mangaID = Long.valueOf(request.getParameter(MANGA_ID));
 
         List<Volume> volumes = volumeBuilder.fillAllToDisplay(mangaID);
-        Manga manga = mangaBuilder.fillOneToDisplay(mangaID, localeID);
         List<Genre> genres = genreDAO.selectAll(localeID);
-
+        Manga manga = mangaBuilder.fillOneToDisplay(mangaID, localeID);
         manga.setVolumes(volumes);
+
         request.setAttribute(MANGA, manga);
         request.setAttribute(GENRES, genres);
         dispatcher = request.getRequestDispatcher(VOLUMES_JSP);

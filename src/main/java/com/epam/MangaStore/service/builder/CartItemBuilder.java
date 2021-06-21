@@ -33,7 +33,7 @@ public class CartItemBuilder {
         CartItem cartItem = new CartItem();
         cartItem.setUserID(user.getId());
         cartItem.setVolume(volume);
-        cartItem.setQuantity(DEFAULT_VOLUME_QUANTITY);
+        cartItem.setQuantity(DEFAULT_CART_ITEM_QUANTITY);
         return cartItem;
     }
 

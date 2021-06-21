@@ -20,21 +20,21 @@ import static com.epam.MangaStore.constants.Constants.*;
 public class DisplayMyOrdersService implements Service {
 
         private OrderBuilder orderBuilder = OrderBuilder.getInstance();
+        private RequestDispatcher dispatcher;
 
         @Override
         public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 
             HttpSession session = request.getSession();
-            RequestDispatcher dispatcher;
+            Integer localeID = (Integer) session.getAttribute(LOCALE_ID);
 
             if (AccessValidator.isAccessDenied(ROLE_USER_ID, session)) {
                 dispatcher = request.getRequestDispatcher(SIGN_IN_JSP);
                 dispatcher.forward(request, response);
             }
 
-            Integer localID = (Integer) session.getAttribute(LOCALE_ID);
             User user = (User) session.getAttribute(USER);
-            List<Order> orders = orderBuilder.fillUserOrders(user.getId(), localID);
+            List<Order> orders = orderBuilder.fillUserOrders(user.getId(), localeID);
 
             request.setAttribute(USER_ORDERS, orders);
             dispatcher = request.getRequestDispatcher(MY_ORDERS_JSP);

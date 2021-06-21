@@ -19,6 +19,7 @@ import static com.epam.MangaStore.constants.Constants.*;
 public class DisplayAllUsersService implements Service {
 
     private RequestDispatcher dispatcher;
+    private UserDAO userDAO = new UserDAOImpl();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
@@ -27,8 +28,6 @@ public class DisplayAllUsersService implements Service {
             dispatcher = request.getRequestDispatcher(SIGN_IN_JSP);
             dispatcher.forward(request, response);
         }
-
-        UserDAO userDAO = new UserDAOImpl();
         List<User> users = userDAO.selectAll();
         request.setAttribute(USERS, users);
         dispatcher = request.getRequestDispatcher(EDIT_USERS_JSP);

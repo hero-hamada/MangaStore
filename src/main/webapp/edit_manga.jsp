@@ -83,7 +83,7 @@
                     <c:forEach items="${requestScope.releasingStatuses}" var="status">
                         <div class="form-check form-check-inline">
                             <input name="releasingStatusID" type="radio" value="${status.id}" class="form-check-input"
-                                   <c:if test="${requestScope.manga.releaseStatusID eq status.id}">checked</c:if>
+                                   <c:if test="${requestScope.manga.releasingStatusID eq status.id}">checked</c:if>
                                    required>
                             <label class="form-check-label">${status.name}</label>
                         </div>

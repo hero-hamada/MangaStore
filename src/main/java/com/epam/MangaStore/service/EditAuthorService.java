@@ -32,13 +32,14 @@ public class EditAuthorService implements Service {
             dispatcher.forward(request, response);
         }
 
-        if (request.getParameter(FIRST_NAME).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(AUTHOR_ID).length() == EMPTY_REQUEST_LENGTH
+        Author author = authorBuilder.fillToUpdate(request);
+
+        if (author.getFirstName().length() == EMPTY_REQUEST_LENGTH ||
+                authorDAO.selectByID(author.getId()) == null
         ) {
             request.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
             serviceFactory.getService(DISPLAY_ALL_AUTHORS_SERVICES).execute(request, response);
         } else {
-            Author author = authorBuilder.fillToUpdate(request);
             authorDAO.update(author);
             serviceFactory.getService(DISPLAY_ALL_AUTHORS_SERVICES).execute(request, response);
         }

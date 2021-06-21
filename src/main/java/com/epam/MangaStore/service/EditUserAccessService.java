@@ -1,5 +1,7 @@
 package com.epam.MangaStore.service;
 
+import com.epam.MangaStore.database.dao.impl.AccessStatusDAOImpl;
+import com.epam.MangaStore.database.dao.interfaces.AccessStatusDAO;
 import com.epam.MangaStore.database.dao.interfaces.UserDAO;
 import com.epam.MangaStore.database.dao.impl.UserDAOImpl;
 import com.epam.MangaStore.service.factory.ServiceFactory;
@@ -17,8 +19,10 @@ import static com.epam.MangaStore.constants.Constants.*;
 
 public class EditUserAccessService implements Service {
 
-    ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    RequestDispatcher dispatcher;
+    private ServiceFactory serviceFactory = ServiceFactory.getInstance();
+    private UserDAO userDAO = new UserDAOImpl();
+    private AccessStatusDAO accessStatusDAO = new AccessStatusDAOImpl();
+    private RequestDispatcher dispatcher;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
@@ -32,8 +36,10 @@ public class EditUserAccessService implements Service {
         Boolean isUserBanned = Boolean.parseBoolean(request.getParameter(IS_USER_BANNED));
         Long userID = Long.valueOf(request.getParameter(USER_ID));
 
-        UserDAO userDAO = new UserDAOImpl();
-        userDAO.updateUserAccess(userStatusID, isUserBanned, userID);
+        if (userDAO.selectByID(userID) != null && accessStatusDAO.isAccessStatusExists(userStatusID)) {
+            userDAO.updateUserAccess(userStatusID, isUserBanned, userID);
+        }
+
         serviceFactory.getService(DISPLAY_ALL_USERS_SERVICE).execute(request, response);
     }
 }
