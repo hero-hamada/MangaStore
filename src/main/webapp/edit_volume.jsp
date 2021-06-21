@@ -113,7 +113,7 @@
                         >
                             <fmt:message key="select.user.status.active"/>
                         </option>
-                        <option value="${Constants.userStatusDeletedID}"
+                        <option value="${Constants.accessStatusDeletedID}"
                                 <c:if test="${requestScope.volume.accessStatusID eq Constants.accessStatusDeletedID}">
                                     selected
                                 </c:if>

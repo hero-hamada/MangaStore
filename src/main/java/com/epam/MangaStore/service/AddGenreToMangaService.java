@@ -51,9 +51,9 @@ public class AddGenreToMangaService implements Service {
                     if (!mangaToGenreDAO.isPairExists(mangaID, genreID))
                         mangaToGenreDAO.insert(mangaID, genreID);
                 }
-                serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            } else {
+                request.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
             }
-            request.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
             serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
         }
     }

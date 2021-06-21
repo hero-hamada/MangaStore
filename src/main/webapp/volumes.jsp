@@ -30,7 +30,8 @@
                     <c:if test="${sessionScope.user.roleID eq Constants.roleAdminID}">
                         <form action="PrepareEditMangaPage" method="get" class="col-2 float-right">
                             <div class="form-group">
-                                <input type="hidden" name="mangaID" value="${requestScope.manga.id}" class="form-control" required>
+                                <input type="hidden" name="mangaID" value="${requestScope.manga.id}"
+                                       class="form-control" required>
                                 <button type="submit" class="btn-link">
                                     <i class="fas fa-edit"></i>
                                 </button>
@@ -46,9 +47,22 @@
         <div class="col-4 mt-3">
             <ul class="list-items">
                 <li><fmt:message key="li.releaseDate"/>: <span>${requestScope.manga.releaseDate}</span></li>
-                <li><fmt:message key="th.status"/>: <span class="text-success">${requestScope.manga.releasingStatus.name}</span>
+                <li><fmt:message key="th.status"/>: <span
+                        class="text-success">${requestScope.manga.releasingStatus.name}</span>
                 </li>
                 <li><fmt:message key="th.publisherName"/>: <a href="#">${requestScope.manga.publisher.name}</a></li>
+                <li><fmt:message key="li.language"/>:
+                    <span class="text-uppercase text-danger border border-danger rounded">
+                <c:choose>
+                    <c:when test="${requestScope.manga.languageID eq Constants.localeEnglishID}">
+                        <fmt:message key="select.option.en"/>
+                    </c:when>
+                    <c:when test="${requestScope.manga.languageID eq Constants.localeRussianID}">
+                        <fmt:message key="select.option.ru"/>
+                    </c:when>
+                </c:choose>
+                </span>
+                </li>
                 <li><fmt:message key="li.genres"/>:
                     <ul>
                         <c:forEach items="${requestScope.manga.genres}" var="genre">
@@ -171,7 +185,7 @@
                                         <li><fmt:message key="li.format"/>: <span>${volume.format}</span></li>
                                         <li><fmt:message key="li.size"/>: <span>${volume.size}</span></li>
                                         <li><fmt:message key="li.binding"/>: <span>${volume.binding}</span></li>
-                                        <li class="text-success"><fmt:message key="th.price"/>:
+                                        <li class="text-success fw-bold"><fmt:message key="th.price"/>:
                                             <span>${volume.price}</span> <fmt:message key="span.currency.tenge"/>
                                         </li>
                                         <li><fmt:message key="li.releaseDate"/>: <span>${volume.releaseDate}</span></li>
