@@ -1,15 +1,11 @@
 package com.epam.MangaStore.service;
 
-import com.epam.MangaStore.database.dao.impl.GenreDAOImpl;
-import com.epam.MangaStore.database.dao.impl.MangaStatusDAOImpl;
-import com.epam.MangaStore.database.dao.interfaces.GenreDAO;
-import com.epam.MangaStore.database.dao.interfaces.MangaStatusDAO;
-import com.epam.MangaStore.entity.Genre;
-import com.epam.MangaStore.entity.Manga;
-import com.epam.MangaStore.entity.MangaStatus;
-import com.epam.MangaStore.service.factory.MangaFactory;
 
-import javax.servlet.RequestDispatcher;
+import com.epam.MangaStore.entity.Manga;
+import com.epam.MangaStore.service.builder.MangaBuilder;
+import com.epam.MangaStore.service.factory.ServiceFactory;
+import com.epam.MangaStore.util.validator.AccessValidator;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,29 +19,28 @@ import static com.epam.MangaStore.constants.Constants.*;
 
 public class FilterMangaService implements Service {
 
-    private MangaFactory mangaFactory = MangaFactory.getInstance();
-    private MangaStatusDAO mangaStatusDAO = new MangaStatusDAOImpl();
-    private GenreDAO genreDAO = new GenreDAOImpl();
+    private MangaBuilder mangaBuilder = MangaBuilder.getInstance();
+    private ServiceFactory serviceFactory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
-
         HttpSession session = request.getSession();
-
-        Long genreID = Long.parseLong(request.getParameter("genreID"));
-
         Integer localeID = (Integer) session.getAttribute(LOCALE_ID);
+        List<Manga> mangas = mangaBuilder.fillAllToDisplay(localeID);
 
-        List<Manga> mangas = mangaFactory.fillMangasByFilter(genreID, localeID);
+        if (request.getParameter(GENRE_ID) != null) {
+            Integer genreID = Integer.parseInt(request.getParameter(GENRE_ID));
+            if (!genreID.equals(GENRE_ALL_ID)) {
+                mangas = mangaBuilder.fillByFilter(genreID, localeID);
+                request.setAttribute(GENRE_ID, genreID);
+            }
+        }
 
-        List<MangaStatus> mangaStatuses = mangaStatusDAO.selectAll(localeID);
-        List<Genre> genres = genreDAO.selectAll(localeID);
+        if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
+            mangas = mangaBuilder.getActive(mangas);
+        }
 
-        request.setAttribute(ALL_MANGAS, mangas);
-        request.setAttribute(ALL_GENRES, genres);
-        request.setAttribute(ALL_MANGA_STATUSES, mangaStatuses);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher(MANGAS_JSP);
-        dispatcher.forward(request, response);
+        request.setAttribute(MANGAS, mangas);
+        serviceFactory.getService(PREPARE_MANGAS_PAGE_SERVICE).execute(request, response);
     }
 }

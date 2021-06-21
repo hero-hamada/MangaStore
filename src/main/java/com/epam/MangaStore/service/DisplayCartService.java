@@ -2,7 +2,8 @@ package com.epam.MangaStore.service;
 
 import com.epam.MangaStore.entity.CartItem;
 import com.epam.MangaStore.entity.User;
-import com.epam.MangaStore.service.factory.CartFactory;
+import com.epam.MangaStore.service.builder.CartItemBuilder;
+import com.epam.MangaStore.util.validator.AccessValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,23 +19,26 @@ import static com.epam.MangaStore.constants.Constants.*;
 
 public class DisplayCartService implements Service {
 
-    private CartFactory cartFactory = CartFactory.getInstance();
+    private CartItemBuilder cartItemBuilder = CartItemBuilder.getInstance();
+    private RequestDispatcher dispatcher;
 
-    // should I check roleID, is_banned, user A: YES!
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 
         HttpSession session = request.getSession();
 
-//        session.setAttribute(LOCALE_ID, LOCALE_ENGLISH_ID);
+        if (AccessValidator.isAccessDenied(ROLE_USER_ID, session)) {
+            dispatcher = request.getRequestDispatcher(ERROR_JSP);
+            dispatcher.forward(request, response);
+        }
 
         User user = (User) session.getAttribute(USER);
 
-        List<CartItem> cartItems = cartFactory.fillCartItems(user.getId());
+        List<CartItem> cartItems = cartItemBuilder.fillUserCartItems(user.getId());
 
         request.setAttribute(CART_ITEMS, cartItems);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(CART_JSP);
+        dispatcher = request.getRequestDispatcher(CART_JSP);
         dispatcher.forward(request, response);
     }
 }

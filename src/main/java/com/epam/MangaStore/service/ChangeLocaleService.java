@@ -20,17 +20,14 @@ public class ChangeLocaleService implements Service {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
-        RequestDispatcher dispatcher;
 
         HttpSession session = request.getSession();
         String selectedLocale = request.getParameter(LOCALE);
 
         Integer languageID = languageDAO.selectIdByName(selectedLocale);
-
         session.setAttribute(LOCALE, selectedLocale);
         session.setAttribute(LOCALE_ID, languageID);
 
-        dispatcher = request.getRequestDispatcher(INDEX_JSP);
-        dispatcher.forward(request, response);
+        response.sendRedirect(request.getHeader(REFERER));
     }
 }

@@ -6,12 +6,11 @@
 <fmt:setBundle basename="localization"/>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://kit.fontawesome.com/3ceb327b1f.js" crossorigin="anonymous"></script>
-    <!-- Bootstrap CSS -->
     <script
             type="text/javascript"
             src="https://use.fontawesome.com/releases/v5.15.3/js/conflict-detection.js">

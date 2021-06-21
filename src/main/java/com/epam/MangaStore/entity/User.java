@@ -2,8 +2,6 @@ package com.epam.MangaStore.entity;
 
 import java.util.Objects;
 
-import static com.epam.MangaStore.constants.Constants.ROLE_USER_ID;
-import static com.epam.MangaStore.constants.Constants.USER_STATUS_ACTIVE_ID;
 
 public class User {
 
@@ -11,6 +9,8 @@ public class User {
     private String email;
     private String login;
     private String password;
+    private String confirmPassword;
+    private String oldPassword;
     private String postalCode;
     private String address;
     private String phone;
@@ -50,12 +50,20 @@ public class User {
         this.roleID = roleID;
     }
 
-    public void setBanned(Boolean banned) {
-        isBanned = banned;
-    }
-
     public void setStatusID(Integer statusID) {
         this.statusID = statusID;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
     }
 
     public Long getId() {
@@ -98,12 +106,20 @@ public class User {
         return statusID;
     }
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return roleID == user.roleID && isBanned == user.isBanned && statusID.equals(user.statusID) && id.equals(user.id) && email.equals(user.email) && login.equals(user.login) && password.equals(user.password) && postalCode.equals(user.postalCode) && address.equals(user.address) && phone.equals(user.phone);
+        return isBanned == user.isBanned && id.equals(user.id) && email.equals(user.email) && login.equals(user.login) && password.equals(user.password) && postalCode.equals(user.postalCode) && address.equals(user.address) && phone.equals(user.phone) && roleID.equals(user.roleID) && statusID.equals(user.statusID);
     }
 
     @Override
@@ -118,6 +134,8 @@ public class User {
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", oldPassword='" + oldPassword + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +

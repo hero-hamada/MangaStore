@@ -9,12 +9,11 @@ public class Manga extends Book {
     private Integer languageID;
     private Long publisherID;
     private Publisher publisher;
-    private Integer statusID;
-    private MangaStatus status;
+    private Integer releasingStatusID;
+    private ReleasingStatus releasingStatus;
     private List<Volume> volumes;
     private List<Author> authors;
     private List<Genre> genres;
-    private Double rating;
 
     public void setDescription(String description) {
         this.description = description;
@@ -28,8 +27,8 @@ public class Manga extends Book {
         this.publisher = publisher;
     }
 
-    public void setStatus(MangaStatus status) {
-        this.status = status;
+    public void setStatus(ReleasingStatus releasingStatus) {
+        this.releasingStatus = releasingStatus;
     }
 
     public void setVolumes(List<Volume> volumes) {
@@ -44,12 +43,8 @@ public class Manga extends Book {
         this.genres = genres;
     }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
-
-    public void setStatusID(Integer statusID) {
-        this.statusID = statusID;
+    public void setReleaseStatusID(Integer releasingStatusID) {
+        this.releasingStatusID = releasingStatusID;
     }
 
     public void setPublisherID(Long publisherID) {
@@ -68,8 +63,8 @@ public class Manga extends Book {
         return publisher;
     }
 
-    public MangaStatus getStatus() {
-        return status;
+    public ReleasingStatus getStatus() {
+        return releasingStatus;
     }
 
     public List<Volume> getVolumes() {
@@ -84,12 +79,8 @@ public class Manga extends Book {
         return genres;
     }
 
-    public Double getRating() {
-        return rating;
-    }
-
-    public Integer getStatusID() {
-        return statusID;
+    public Integer getReleaseStatusID() {
+        return releasingStatusID;
     }
 
     public Long getPublisherID() {
@@ -100,28 +91,28 @@ public class Manga extends Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Manga manga = (Manga) o;
-        return description.equals(manga.description) && languageID.equals(manga.languageID) && publisherID.equals(manga.publisherID) && publisher.equals(manga.publisher) && statusID.equals(manga.statusID) && status.equals(manga.status) && volumes.equals(manga.volumes) && authors.equals(manga.authors) && genres.equals(manga.genres) && rating.equals(manga.rating);
+        return description.equals(manga.description) && languageID.equals(manga.languageID) && publisherID.equals(manga.publisherID) && publisher.equals(manga.publisher) && releasingStatusID.equals(manga.releasingStatusID) && releasingStatus.equals(manga.releasingStatus) && volumes.equals(manga.volumes) && authors.equals(manga.authors) && genres.equals(manga.genres);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, languageID, publisherID, publisher, statusID, status, volumes, authors, genres, rating);
+        return Objects.hash(super.hashCode(), description, languageID, publisherID, publisher, releasingStatusID, releasingStatus, volumes, authors, genres);
     }
 
     @Override
     public String toString() {
-        return "Manga{" +
+        return super.toString() + "Manga{" +
                 "description='" + description + '\'' +
                 ", languageID=" + languageID +
                 ", publisherID=" + publisherID +
                 ", publisher=" + publisher +
-                ", statusID=" + statusID +
-                ", status=" + status +
+                ", releasingStatusID=" + releasingStatusID +
+                ", releasingStatus=" + releasingStatus +
                 ", volumes=" + volumes +
                 ", authors=" + authors +
                 ", genres=" + genres +
-                ", rating=" + rating +
                 '}';
     }
 }

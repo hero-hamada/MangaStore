@@ -5,12 +5,11 @@ import java.util.Objects;
 
 public class Genre {
 
-    private Long id;
+    private Integer id;
     private Integer languageID;
-    private String language;
     private String name;
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -18,24 +17,16 @@ public class Genre {
         this.languageID = languageID;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
     public Integer getLanguageID() {
         return languageID;
-    }
-
-    public String getLanguage() {
-        return language;
     }
 
     public String getName() {
@@ -47,12 +38,12 @@ public class Genre {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Genre genre = (Genre) o;
-        return id.equals(genre.id) && languageID.equals(genre.languageID) && language.equals(genre.language) && name.equals(genre.name);
+        return id.equals(genre.id) && languageID.equals(genre.languageID) && name.equals(genre.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, languageID, language, name);
+        return Objects.hash(id, languageID, name);
     }
 
     @Override
@@ -60,7 +51,6 @@ public class Genre {
         return "Genre{" +
                 "id=" + id +
                 ", languageID=" + languageID +
-                ", language='" + language + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }

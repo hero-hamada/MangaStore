@@ -16,35 +16,45 @@ public class GenreDAOImpl implements GenreDAO {
     private ConnectionPool connectionPool;
     private Connection connection;
 
-    private static final String SELECT_GENRES_BY_MANGA_LANGUAGE_ID =
-                "SELECT * FROM manga m " +
-                "INNER JOIN manga2genre m2g on m.id = m2g.manga_id " +
-                "INNER JOIN genre g on m2g.genre_id = g.id " +
-                "WHERE m.id = ? AND  g.language_id = ?";
-
     private static final String SELECT_ALL = "SELECT * FROM genre WHERE language_id = ?";
+    private static final String SELECT_BY_ID = "SELECT * FROM genre WHERE id = ?";
+    private static final String SELECT_GENRES_BY_MANGA_LANGUAGE_ID =
+            "SELECT g.id, g.language_id, g.name FROM manga m\n" +
+                    "INNER JOIN manga2genre m2g on m.id = m2g.manga_id\n" +
+                    "INNER JOIN genre g on m2g.genre_id = g.id\n" +
+                    "WHERE m.id = ? AND g.language_id = ?";
 
-    public Genre getGenreByResultSet(ResultSet resultSet) throws SQLException{
-        Long id = resultSet.getLong("id");
-        Integer languageID = resultSet.getInt("language_id");
-        String name = resultSet.getString("name");
-
+    private Genre getGenreByResultSet(ResultSet resultSet) throws SQLException {
         Genre genre = new Genre();
-        genre.setId(id);
-        genre.setLanguageID(languageID);
-        genre.setName(name);
-
+        genre.setId(resultSet.getInt("id"));
+        genre.setLanguageID(resultSet.getInt("language_id"));
+        genre.setName(resultSet.getString("name"));
         return genre;
     }
 
+    @Override
+    public Genre selectByID(Integer genreID) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        Genre genre = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
+            preparedStatement.setInt(1, genreID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                genre = getGenreByResultSet(resultSet);
+            }
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return genre;
+    }
 
-    public List<Genre> selectGenresByMangaLanguageID(Long mangaID, Integer sessionLanguageID)  throws SQLException  {
+    public List<Genre> selectAll(Integer localeID)  throws SQLException  {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
         List<Genre> genres = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_GENRES_BY_MANGA_LANGUAGE_ID)) {
-            preparedStatement.setLong(1, mangaID);
-            preparedStatement.setInt(2, sessionLanguageID);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
+            preparedStatement.setInt(1, localeID);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 genres.add(getGenreByResultSet(resultSet));
@@ -54,12 +64,14 @@ public class GenreDAOImpl implements GenreDAO {
         }
         return genres;
     }
-    public List<Genre> selectAll(Integer sessionLanguageID)  throws SQLException  {
+
+    public List<Genre> selectGenresByMangaLanguageID(Long mangaID, Integer localeID)  throws SQLException  {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
         List<Genre> genres = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
-            preparedStatement.setInt(1, sessionLanguageID);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_GENRES_BY_MANGA_LANGUAGE_ID)) {
+            preparedStatement.setLong(1, mangaID);
+            preparedStatement.setInt(2, localeID);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 genres.add(getGenreByResultSet(resultSet));

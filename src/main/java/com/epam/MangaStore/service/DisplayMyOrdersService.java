@@ -1,10 +1,9 @@
 package com.epam.MangaStore.service;
 
-import com.epam.MangaStore.entity.CartItem;
 import com.epam.MangaStore.entity.Order;
 import com.epam.MangaStore.entity.User;
-import com.epam.MangaStore.service.factory.CartFactory;
-import com.epam.MangaStore.service.factory.OrderFactory;
+import com.epam.MangaStore.service.builder.OrderBuilder;
+import com.epam.MangaStore.util.validator.AccessValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,25 +19,25 @@ import static com.epam.MangaStore.constants.Constants.*;
 
 public class DisplayMyOrdersService implements Service {
 
-        private OrderFactory orderFactory = OrderFactory.getInstance();
+        private OrderBuilder orderBuilder = OrderBuilder.getInstance();
 
-        // should I check roleID, is_banned, user A: YES!
         @Override
         public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 
             HttpSession session = request.getSession();
+            RequestDispatcher dispatcher;
 
-//            session.setAttribute(LOCALE_ID, LOCALE_ENGLISH_ID);
+            if (AccessValidator.isAccessDenied(ROLE_USER_ID, session)) {
+                dispatcher = request.getRequestDispatcher(SIGN_IN_JSP);
+                dispatcher.forward(request, response);
+            }
 
             Integer localID = (Integer) session.getAttribute(LOCALE_ID);
-
             User user = (User) session.getAttribute(USER);
-
-            List<Order> orders = orderFactory.fillUserOrders(user.getId(), localID);
+            List<Order> orders = orderBuilder.fillUserOrders(user.getId(), localID);
 
             request.setAttribute(USER_ORDERS, orders);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher(MY_ORDERS_JSP);
+            dispatcher = request.getRequestDispatcher(MY_ORDERS_JSP);
             dispatcher.forward(request, response);
         }
 }

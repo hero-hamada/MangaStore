@@ -1,6 +1,5 @@
 package com.epam.MangaStore.database.connection;
 
-import com.epam.MangaStore.controller.MangaStoreController;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -11,7 +10,7 @@ import java.util.concurrent.BlockingQueue;
 
 public final class ConnectionPool {
 
-    private final static Logger LOGGER = Logger.getLogger(MangaStoreController.class);
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
     private static ConnectionPool instance;
 
     private BlockingQueue<Connection> connectionQueue;
@@ -50,11 +49,10 @@ public final class ConnectionPool {
         return instance;
     }
 
-
     public void initPoolData() {
         try {
             Class.forName(driverName);
-            connectionQueue = new ArrayBlockingQueue<Connection>(poolSize);
+            connectionQueue = new ArrayBlockingQueue<>(poolSize);
             for (int i = 0; i < poolSize; i++) {
                 Connection connection = DriverManager.getConnection(url, user,
                         password);

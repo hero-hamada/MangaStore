@@ -20,14 +20,28 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
     private static final String SELECT_ALL = "SELECT * FROM order_status WHERE language_id = ?";
 
 
-    public OrderStatus getMangaStatusByResultSet(ResultSet resultSet) throws SQLException {
-
+    private OrderStatus getMangaStatusByResultSet(ResultSet resultSet) throws SQLException {
         OrderStatus mangaStatus = new OrderStatus();
         mangaStatus.setId(resultSet.getLong("id"));
         mangaStatus.setLanguageID(resultSet.getInt("language_id"));
         mangaStatus.setName(resultSet.getString("name"));
-
         return mangaStatus;
+    }
+
+    public List<OrderStatus> selectAll(Integer sessionLanguageID) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        List<OrderStatus> orderStatuses = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
+            preparedStatement.setInt(1, sessionLanguageID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                orderStatuses.add(getMangaStatusByResultSet(resultSet));
+            }
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return orderStatuses;
     }
 
     public OrderStatus selectOrderStatusByID(Integer statusID, Integer sessionLanguageID) throws SQLException {
@@ -45,21 +59,5 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
             connectionPool.returnConnection(connection);
         }
         return orderStatus;
-    }
-
-    public List<OrderStatus> selectAll(Integer sessionLanguageID) throws SQLException {
-        connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.takeConnection();
-        List<OrderStatus> orderStatuses = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
-            preparedStatement.setInt(1, sessionLanguageID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                orderStatuses.add(getMangaStatusByResultSet(resultSet));
-            }
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-        return orderStatuses;
     }
 }

@@ -17,35 +17,23 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse navbar-fixed-top row" id="navbarSupportedContent">
         <ul class="nav navbar-nav col-4">
             <li class="nav-item">
-                <form action="DisplayAllMangas" method="get">
+                <form action="FilterManga" method="get">
                     <input type="hidden" name="direction" value="mangas.jsp">
-                    <input type="submit" class="nav-link" value="<fmt:message key="nav.manga"/>">
+                    <input type="submit" class="nav-link" value="<fmt:message key="head.manga"/>">
                 </form>
             </li>
         </ul>
         <ul class="nav navbar-nav col-8">
             <li class="nav-item">
-                <form action="changeLocale" method="get">
+                <form action="ChangeLocale" method="get">
                     <select name="locale" class="btn rounded-pill" onchange="this.form.submit();">
-                        <%--    "" when using constants.localeRussian = "ru" ????     --%>
-                        <option
-                                value="ru"
-                                <c:if test="${sessionScope.localeID eq 2}">
-                                    selected
-                                </c:if>
-                        >
+                        <option value="ru" <c:if test="${sessionScope.localeID eq Constants.localeRussianID}">selected</c:if>>
                             <fmt:message key="select.option.ru"/>
                         </option>
-                        <option
-                                value="en"
-                                <c:if test="${sessionScope.localeID eq 1}">
-                                    selected
-                                </c:if>
-                        >
+                        <option value="en" <c:if test="${sessionScope.localeID eq Constants.localeEnglishID}">selected</c:if>>
                             <fmt:message key="select.option.en"/>
                         </option>
                     </select>
@@ -53,19 +41,17 @@
 
             </li>
             <li class="nav-item">
+                <form action="Search" method="get">
                 <div class="input-group">
                     <div class="form-outline">
-                        <input
-                                type="search"
-                                id="formSearch"
-                                class="form-control rounded-pill"
-                                placeholder="<fmt:message key="placeholder.search"/>"
-                        >
+                        <input type="search" name="title" class="form-control rounded-pill"
+                                placeholder="<fmt:message key="placeholder.search"/>">
                     </div>
-                    <button type="button" class="btn rounded-pill">
+                    <button type="submit" class="btn rounded-pill">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
+                </form>
             </li>
             <c:if test="${not empty sessionScope.user}">
                 <c:if test="${sessionScope.user.roleID eq Constants.roleUserID}">
@@ -82,19 +68,18 @@
                         <i class="fas fa-user"></i>
                             ${sessionScope.user.login}
                     </a>
-
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
-                        <a class="dropdown-item" href="#"><fmt:message key="nav.user.myPage"/></a>
+                        <a class="dropdown-item" href="edit_profile.jsp"><fmt:message key="head.edit.profile"/></a>
                         <c:if test="${sessionScope.user.roleID eq Constants.roleUserID}">
                             <form action="DisplayMyOrders" method="get">
-                                <input type="submit" name="direction" class="form-control dropdown-item"
-                                       value="<fmt:message key="nav.user.myOrders"/>">
+                                <input type="hidden" name="direction" value="my_orders.jsp">
+                                <input type="submit" class="form-control dropdown-item" value="<fmt:message key="nav.user.myOrders"/>">
                             </form>
                         </c:if>
                         <c:if test="${sessionScope.user.roleID eq Constants.roleAdminID}">
-                            <a class="dropdown-item" href="adminPage.jsp"><fmt:message key="nav.user.adminPage"/></a>
+                            <a class="dropdown-item" href="admin_panel.jsp"><fmt:message key="head.admin.panel"/></a>
                         </c:if>
-                        <form action="signOut" method="post">
+                        <form action="SignOut" method="post">
                             <input type="submit" class="form-control dropdown-item"
                                    value="<fmt:message key="button.signOut"/>">
                         </form>

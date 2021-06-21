@@ -6,9 +6,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface CartDAO {
+
     Long insert(CartItem cartItem) throws SQLException;
+
+    CartItem selectByID(Long id) throws SQLException;
+
     List<CartItem> selectCartItemsByUserID(Long userID) throws SQLException;
-    Boolean isCartItemExistInCart(CartItem cartItem) throws SQLException;
-    void updateCartItemQuantityByID(Long cartItemID, Integer quantity) throws SQLException;
-    void deleteCartItemByID(Long cartItemID) throws SQLException;
+
+    boolean isVolumeExistInCart(CartItem cartItem) throws SQLException;
+
+    void delete(Long cartItemID) throws SQLException;
+
+    void updateQuantity(CartItem cartItem) throws SQLException;
 }

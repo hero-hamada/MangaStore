@@ -2,11 +2,7 @@ package com.epam.MangaStore.database.dao.impl;
 
 import com.epam.MangaStore.database.connection.ConnectionPool;
 import com.epam.MangaStore.database.dao.interfaces.OrderDAO;
-import com.epam.MangaStore.entity.CartItem;
 import com.epam.MangaStore.entity.Order;
-import com.epam.MangaStore.entity.OrderStatus;
-import com.epam.MangaStore.entity.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +18,7 @@ public class OrderDAOImpl implements OrderDAO {
             " VALUES (?,?,?,?)";
     private static final String UPDATE_ORDER_STATUS_BY_ID = "UPDATE `order` SET order_status_id = ? WHERE id = ?";
 
-    public Order getOrderByResultSet(ResultSet resultSet) throws SQLException {
-
+    private Order getOrderByResultSet(ResultSet resultSet) throws SQLException {
         Order order = new Order();
         order.setId(resultSet.getLong("id"));
         order.setUserID(resultSet.getLong("user_id"));
@@ -58,23 +53,6 @@ public class OrderDAOImpl implements OrderDAO {
         return generatedID;
     }
 
-
-    public List<Order> selectUserOrders(Long userID) throws SQLException {
-        connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.takeConnection();
-        List<Order> orders = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDERS_BY_USER_ID)) {
-            preparedStatement.setLong(1, userID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                orders.add(getOrderByResultSet(resultSet));
-            }
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-        return orders;
-    }
-
     public List<Order> selectAll() throws SQLException {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
@@ -101,5 +79,21 @@ public class OrderDAOImpl implements OrderDAO {
         } finally {
             connectionPool.returnConnection(connection);
         }
+    }
+
+    public List<Order> selectUserOrders(Long userID) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        List<Order> orders = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDERS_BY_USER_ID)) {
+            preparedStatement.setLong(1, userID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                orders.add(getOrderByResultSet(resultSet));
+            }
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return orders;
     }
 }

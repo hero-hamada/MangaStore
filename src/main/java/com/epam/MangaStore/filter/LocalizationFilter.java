@@ -6,6 +6,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import com.epam.MangaStore.constants.Constants.*;
 
+import static com.epam.MangaStore.constants.Constants.LOCALE;
+import static com.epam.MangaStore.constants.Constants.LOCALE_ID;
+
 
 public class LocalizationFilter implements Filter {
 
@@ -13,8 +16,8 @@ public class LocalizationFilter implements Filter {
     private Integer localeID;
     private static String CONFIG_LOCALE = "en";
     private static Integer CONFIG_LOCALE_ID = 1;
-    private static String INIT_PARAM_LOCALE = "local";
-    private static String INIT_PARAM_LOCALE_ID = "localID";
+    private static String INIT_PARAM_LOCALE = "locale";
+    private static String INIT_PARAM_LOCALE_ID = "localeID";
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -32,14 +35,13 @@ public class LocalizationFilter implements Filter {
             locale = CONFIG_LOCALE;
             localeID = CONFIG_LOCALE_ID;
         }
-
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession(true);
-        String sessionLocale = (String) session.getAttribute("locale");
-        Integer sessionLocaleID = (Integer) session.getAttribute("localeID");
+        String sessionLocale = (String) session.getAttribute(LOCALE);
+        Integer sessionLocaleID = (Integer) session.getAttribute(LOCALE_ID);
         if (sessionLocale == null || sessionLocaleID == null) {
-            session.setAttribute("locale", locale);
-            session.setAttribute("localeID", localeID);
+            session.setAttribute(LOCALE, locale);
+            session.setAttribute(LOCALE_ID, localeID);
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

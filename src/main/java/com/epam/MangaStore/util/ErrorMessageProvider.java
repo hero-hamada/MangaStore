@@ -16,7 +16,7 @@ public class ErrorMessageProvider {
         throw new UnsupportedOperationException();
     }
 
-    public static String get(HttpServletRequest request, String key) {
+    public static String getErrorMessage(HttpServletRequest request, String key) {
         HttpSession session = request.getSession();
 
         String language = (String) session.getAttribute(LOCALE);

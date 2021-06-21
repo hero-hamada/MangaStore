@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public abstract class Book {
 
-    public Long id;
-    public String title;
-    public Date releaseDate;
-    public Long coverID;
-    public String cover;
-    public Boolean isActive;
+    private Long id;
+    private String title;
+    private Date releaseDate;
+    private Long coverID;
+    private String cover;
+    private Integer accessStatusID;
 
     public void setId(Long id) {
         this.id = id;
@@ -32,8 +32,8 @@ public abstract class Book {
         this.coverID = coverID;
     }
 
-    public void setIsActive(Boolean active) {
-        isActive = active;
+    public void setAccessStatusID(Integer accessStatusID) {
+        this.accessStatusID = accessStatusID;
     }
 
     public Long getId() {
@@ -56,8 +56,32 @@ public abstract class Book {
         return coverID;
     }
 
-    public Boolean isActive() {
-        return isActive;
+    public Integer getAccessStatusID() {
+        return accessStatusID;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return id.equals(book.id) && title.equals(book.title) && releaseDate.equals(book.releaseDate) && coverID.equals(book.coverID) && cover.equals(book.cover) && accessStatusID.equals(book.accessStatusID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, releaseDate, coverID, cover, accessStatusID);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", coverID=" + coverID +
+                ", cover='" + cover + '\'' +
+                ", accessStatusID=" + accessStatusID +
+                '}';
+    }
 }

@@ -4,6 +4,7 @@ import com.epam.MangaStore.database.connection.ConnectionPool;
 import com.epam.MangaStore.database.dao.interfaces.CartDAO;
 import com.epam.MangaStore.entity.CartItem;
 import com.epam.MangaStore.entity.Order;
+import com.epam.MangaStore.entity.Publisher;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,8 +20,9 @@ public class CartDAOImpl implements CartDAO {
     private static final String SELECT_CART_ITEMS_BY_USER_VOLUME_ID = "SELECT * FROM cart WHERE user_id = ? AND volume_id =?";
     private static final String UPDATE_QUANTITY_BY_ID = "UPDATE cart SET quantity = ? WHERE id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM cart WHERE id = ?";
+    private static final String SELECT_BY_ID = "SELECT * FROM cart WHERE id = ?";
 
-    public CartItem getCartItemByResultSet(ResultSet resultSet) throws SQLException {
+    private CartItem getCartItemByResultSet(ResultSet resultSet) throws SQLException {
 
         CartItem cartItem = new CartItem();
 
@@ -55,6 +57,49 @@ public class CartDAOImpl implements CartDAO {
         return generatedID;
     }
 
+    @Override
+    public CartItem selectByID(Long id) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        CartItem cartItem = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                cartItem = getCartItemByResultSet(resultSet);
+            }
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return cartItem;
+    }
+
+    @Override
+    public void updateQuantity(CartItem cartItem) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUANTITY_BY_ID)) {
+            preparedStatement.setInt(1, cartItem.getQuantity());
+            preparedStatement.setLong(2, cartItem.getId());
+            preparedStatement.executeUpdate();
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
+    public void delete(Long cartItemID) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID)) {
+            preparedStatement.setLong(1, cartItemID);
+            preparedStatement.executeUpdate();
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+    }
+
+    @Override
     public List<CartItem> selectCartItemsByUserID(Long userID) throws SQLException {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
@@ -73,10 +118,10 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
-    public Boolean isCartItemExistInCart(CartItem cartItem) throws SQLException {
+    public boolean isVolumeExistInCart(CartItem cartItem) throws SQLException {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
-        Boolean isExist = false;
+        boolean isExist;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CART_ITEMS_BY_USER_VOLUME_ID)) {
             preparedStatement.setLong(1, cartItem.getUserID());
             preparedStatement.setLong(2, cartItem.getVolume().getId());
@@ -87,27 +132,4 @@ public class CartDAOImpl implements CartDAO {
         }
         return isExist;
     }
-
-    public void updateCartItemQuantityByID(Long cartItemID, Integer quantity) throws SQLException {
-        connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.takeConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUANTITY_BY_ID)) {
-            preparedStatement.setInt(1, quantity);
-            preparedStatement.setLong(2, cartItemID);
-            preparedStatement.executeUpdate();
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-    public void deleteCartItemByID(Long cartItemID) throws SQLException {
-        connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.takeConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID)) {
-            preparedStatement.setLong(1, cartItemID);
-            preparedStatement.executeUpdate();
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-    }
-
 }

@@ -4,8 +4,8 @@ import com.epam.MangaStore.database.dao.impl.OrderStatusDAOImpl;
 import com.epam.MangaStore.database.dao.interfaces.OrderStatusDAO;
 import com.epam.MangaStore.entity.Order;
 import com.epam.MangaStore.entity.OrderStatus;
-import com.epam.MangaStore.entity.User;
-import com.epam.MangaStore.service.factory.OrderFactory;
+import com.epam.MangaStore.service.builder.OrderBuilder;
+import com.epam.MangaStore.util.validator.AccessValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,27 +22,29 @@ import static com.epam.MangaStore.constants.Constants.*;
 
 public class DisplayAllOrdersService implements Service {
 
-    private OrderFactory orderFactory = OrderFactory.getInstance();
+    private OrderBuilder orderBuilder = OrderBuilder.getInstance();
     private OrderStatusDAO orderStatusDAO = new OrderStatusDAOImpl();
+    private RequestDispatcher dispatcher;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 
         HttpSession session = request.getSession();
 
-//        session.setAttribute(LOCALE_ID, LOCALE_ENGLISH_ID);
+        if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
+            dispatcher = request.getRequestDispatcher(ERROR_JSP);
+            dispatcher.forward(request, response);
+        }
 
         Integer localID = (Integer) session.getAttribute(LOCALE_ID);
 
-        User user = (User) session.getAttribute(USER);
-
-        List<Order> orders = orderFactory.fillAllOrders(localID);
+        List<Order> orders = orderBuilder.fillAllOrders(localID);
         List<OrderStatus> orderStatuses = orderStatusDAO.selectAll(localID);
 
-        request.setAttribute(ALL_ORDERS, orders);
-        request.setAttribute(ALL_ORDER_STATUSES, orderStatuses);
+        request.setAttribute(ORDERS, orders);
+        request.setAttribute(ORDER_STATUSES, orderStatuses);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(ORDERS_JSP);
+        dispatcher = request.getRequestDispatcher(ORDERS_JSP);
         dispatcher.forward(request, response);
     }
 }

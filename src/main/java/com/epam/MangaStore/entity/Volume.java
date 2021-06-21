@@ -12,7 +12,6 @@ public class Volume extends Book {
     private Long price;
     private Long mangaID;
     private Integer number;
-    private String cover;
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
@@ -44,11 +43,6 @@ public class Volume extends Book {
 
     public void setNumber(Integer number) {
         this.number = number;
-    }
-
-    @Override
-    public void setCover(String cover) {
-        this.cover = cover;
     }
 
     public String getIsbn() {
@@ -84,26 +78,22 @@ public class Volume extends Book {
     }
 
     @Override
-    public String getCover() {
-        return cover;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Volume volume = (Volume) o;
-        return isbn.equals(volume.isbn) && pageCount.equals(volume.pageCount) && format.equals(volume.format) && size.equals(volume.size) && binding.equals(volume.binding) && price.equals(volume.price) && mangaID.equals(volume.mangaID) && number.equals(volume.number) && cover.equals(volume.cover);
+        return isbn.equals(volume.isbn) && pageCount.equals(volume.pageCount) && format.equals(volume.format) && size.equals(volume.size) && binding.equals(volume.binding) && price.equals(volume.price) && mangaID.equals(volume.mangaID) && number.equals(volume.number);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn, pageCount, format, size, binding, price, mangaID, number, cover);
+        return Objects.hash(super.hashCode(), isbn, pageCount, format, size, binding, price, mangaID, number);
     }
 
     @Override
     public String toString() {
-        return "Volume{" +
+        return super.toString() + "Volume{" +
                 "isbn='" + isbn + '\'' +
                 ", pageCount=" + pageCount +
                 ", format='" + format + '\'' +
@@ -112,7 +102,6 @@ public class Volume extends Book {
                 ", price=" + price +
                 ", mangaID=" + mangaID +
                 ", number=" + number +
-                ", cover='" + cover + '\'' +
                 '}';
     }
 }

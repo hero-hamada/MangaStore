@@ -6,6 +6,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface GenreDAO {
+
     List<Genre> selectGenresByMangaLanguageID(Long mangaID, Integer sessionLanguageID) throws SQLException;
-    List<Genre> selectAll(Integer sessionLanguageID)  throws SQLException;
+
+    Genre selectByID(Integer genreID) throws SQLException;
+
+    List<Genre> selectAll(Integer sessionLanguageID) throws SQLException;
 }

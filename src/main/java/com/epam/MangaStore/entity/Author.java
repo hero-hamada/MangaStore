@@ -1,6 +1,5 @@
 package com.epam.MangaStore.entity;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Author {
@@ -9,7 +8,6 @@ public class Author {
     private String firstName;
     private String middleName;
     private String lastName;
-    private List<Manga> mangas;
 
     public void setId(Long id) {
         this.id = id;
@@ -25,10 +23,6 @@ public class Author {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public void setMangas(List<Manga> mangas) {
-        this.mangas = mangas;
     }
 
     public Long getId() {
@@ -47,21 +41,18 @@ public class Author {
         return lastName;
     }
 
-    public List<Manga> getMangas() {
-        return mangas;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return id.equals(author.id) && firstName.equals(author.firstName) && middleName.equals(author.middleName) && lastName.equals(author.lastName) && mangas.equals(author.mangas);
+        return id.equals(author.id) && firstName.equals(author.firstName) && middleName.equals(author.middleName) && lastName.equals(author.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, middleName, lastName, mangas);
+        return Objects.hash(id, firstName, middleName, lastName);
     }
 
     @Override
@@ -70,8 +61,7 @@ public class Author {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", mangas=" + mangas +
+                ", lastName='" + lastName +
                 '}';
     }
 }

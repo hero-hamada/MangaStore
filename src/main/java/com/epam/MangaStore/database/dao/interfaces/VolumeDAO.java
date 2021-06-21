@@ -6,8 +6,18 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface VolumeDAO {
+
+    Long insert(Volume volume) throws SQLException;
+
     List<Volume> selectAllVolumesByMangaID(Long id) throws SQLException;
 
-    Volume selectVolumeByID(Long volumeID) throws SQLException;
+    Volume selectByID(Long volumeID) throws SQLException;
 
+    void update(Volume volume) throws SQLException;
+
+    boolean isISBNExists(String isbn) throws SQLException;
+
+    boolean isMangaIDAndNumberExists(Long mangaID, Integer number) throws SQLException;
+
+    List<Volume> selectActiveVolumesByMangaID(Long mangaID) throws SQLException;
 }

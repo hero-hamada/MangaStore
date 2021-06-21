@@ -14,6 +14,7 @@ public class LanguageDAOImpl implements LanguageDAO {
     private Connection connection;
 
     private static final String SELECT_ID_BY_NAME = "SELECT id FROM language WHERE name = ?";
+    private static final String SELECT_BY_ID = "SELECT * FROM language WHERE id = ?";
 
     public Integer selectIdByName(String name) throws SQLException {
         connectionPool = ConnectionPool.getInstance();
@@ -31,4 +32,19 @@ public class LanguageDAOImpl implements LanguageDAO {
         return id;
     }
 
+    public boolean isLanguageExists(Integer id) throws SQLException {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
+        boolean isExists = false;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                isExists = resultSet.next();
+            }
+        } finally {
+            connectionPool.returnConnection(connection);
+        }
+        return isExists;
+    }
 }
