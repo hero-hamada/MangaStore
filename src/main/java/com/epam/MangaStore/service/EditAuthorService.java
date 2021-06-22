@@ -38,10 +38,9 @@ public class EditAuthorService implements Service {
                 authorDAO.selectByID(author.getId()) == null
         ) {
             request.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
-            serviceFactory.getService(DISPLAY_ALL_AUTHORS_SERVICES).execute(request, response);
         } else {
             authorDAO.update(author);
-            serviceFactory.getService(DISPLAY_ALL_AUTHORS_SERVICES).execute(request, response);
         }
+        serviceFactory.getService(DISPLAY_ALL_AUTHORS_SERVICES).execute(request, response);
     }
 }

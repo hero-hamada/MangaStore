@@ -28,23 +28,13 @@ public class DeleteAuthorFromMangaService implements Service {
         if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, request.getSession())) {
             dispatcher = request.getRequestDispatcher(ERROR_JSP);
             dispatcher.forward(request, response);
-        }
-
-        if (request.getParameter(MANGA_ID).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(AUTHOR_ID).length() == EMPTY_REQUEST_LENGTH
-        ) {
-            request.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
         } else {
             Long mangaID = Long.valueOf(request.getParameter(MANGA_ID));
             Long authorID = Long.valueOf(request.getParameter(AUTHOR_ID));
-            if (!mangaToAuthorDAO.isPairExists(mangaID, authorID)) {
-                request.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
-                serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
-            } else {
+            if (mangaToAuthorDAO.isPairExists(mangaID, authorID)) {
                 mangaToAuthorDAO.delete(mangaID, authorID);
-                serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
             }
+            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
         }
     }
 }

@@ -26,6 +26,11 @@
         <div class="row">
             <div class="col-md-3 mt-5">
                 <img src="data:image/*;base64,${requestScope.volume.cover}" alt="cover" class="img-fluid"/>
+                <br>
+                <form action="DisplayAllVolumes" method="get">
+                    <input type="hidden" name="mangaID" value="${requestScope.volume.mangaID}">
+                    <button type="submit" class="btn-link"><i class="fas fa-arrow-left fa-3x"></i></button>
+                </form>
             </div>
             <form action="EditVolume" method="post" enctype="multipart/form-data" class="col-md-9 mt-5">
                 <c:if test="${not empty requestScope.emptyFieldError}">
@@ -74,9 +79,7 @@
                 <div class="row">
                     <div class="form-group col-md-5">
                         <label><fmt:message key="li.binding"/></label>
-                        <input name="binding" type="text" value="${requestScope.volume.binding}"
-                               pattern="[a-zA-Z0-9\s]+"
-                               class="form-control" required>
+                        <input name="binding" type="text" value="${requestScope.volume.binding}" class="form-control" required>
                     </div>
                     <div class="form-group col-md-4">
                         <label><fmt:message key="li.size"/></label>

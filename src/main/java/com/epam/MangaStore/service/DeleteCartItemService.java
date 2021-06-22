@@ -33,8 +33,6 @@ public class DeleteCartItemService implements Service {
 
         if (cartDAO.selectByID(cartItemID) != null) {
             cartDAO.delete(cartItemID);
-        } else {
-            request.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
         }
         serviceFactory.getService(DISPLAY_CART_SERVICE).execute(request, response);
     }

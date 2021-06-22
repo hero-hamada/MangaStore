@@ -36,9 +36,7 @@ public class AddGenreToMangaService implements Service {
         if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, request.getSession())) {
             dispatcher = request.getRequestDispatcher(ERROR_JSP);
             dispatcher.forward(request, response);
-        }
-
-        if (genreValidator.isEmptyParamExists(request)) {
+        } else if (genreValidator.isEmptyParamExists(request)) {
             request.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
             serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
         } else {

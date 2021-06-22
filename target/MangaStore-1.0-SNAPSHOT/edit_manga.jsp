@@ -26,6 +26,11 @@
     <div class="row">
         <div class="col-md-3 mt-5">
             <img src="data:image/*;base64,${requestScope.manga.cover}" alt="cover" class="img-fluid"/>
+            <br>
+            <form action="DisplayAllVolumes" method="get">
+                <input type="hidden" name="mangaID" value="${requestScope.manga.id}">
+                <button type="submit" class="btn-link"><i class="fas fa-arrow-left fa-3x"></i></button>
+            </form>
         </div>
         <form action="EditManga" method="post" enctype="multipart/form-data" class="col-md-9 mt-5">
             <c:if test="${not empty requestScope.emptyFieldError}">

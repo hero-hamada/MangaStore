@@ -28,8 +28,8 @@ public class PrepareAddVolumePageService implements Service {
             dispatcher = request.getRequestDispatcher(ERROR_JSP);
             dispatcher.forward(request, response);
         }
-
         Long mangaID = Long.valueOf(request.getParameter(MANGA_ID));
+
         if (mangaDAO.selectByID(mangaID) == null) {
             serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
         } else {

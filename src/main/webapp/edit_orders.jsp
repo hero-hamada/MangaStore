@@ -69,9 +69,7 @@
                                             <li class="list-group-item d-flex justify-content-between lh-condensed">
                                                 <div>
                                                     <form action="DisplayAllVolumes" method="get">
-                                                        <input type="hidden" name="direction" value="volumes.jsp">
-                                                        <input type="hidden" name="mangaID"
-                                                               value="${orderItem.volume.mangaID}">
+                                                        <input type="hidden" name="mangaID" value="${orderItem.volume.mangaID}">
                                                         <input
                                                                 type="submit"
                                                                 class="btn-link"

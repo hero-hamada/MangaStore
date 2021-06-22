@@ -17,6 +17,7 @@ import static com.epam.MangaStore.constants.Constants.*;
 public class ChangeLocaleService implements Service {
 
     private LanguageDAO languageDAO = new LanguageDAOImpl();
+    private RequestDispatcher dispatcher;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
@@ -29,6 +30,7 @@ public class ChangeLocaleService implements Service {
             session.setAttribute(LOCALE, selectedLocale);
             session.setAttribute(LOCALE_ID, languageID);
         }
-        response.sendRedirect(request.getHeader(REFERER));
+        dispatcher = request.getRequestDispatcher(INDEX_JSP);
+        dispatcher.forward(request, response);
     }
 }

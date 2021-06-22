@@ -16,12 +16,12 @@ import static com.epam.MangaStore.constants.Constants.*;
 
 public class VolumeValidator {
 
-    private static VolumeValidator instance = new VolumeValidator();
     private final static String ISBN_REGEX = "(?=[0-9]{13}$)|97[89][-.]?[0-9]{10}";
     private final static String FORMAT_REGEX = "[0-9.]+x[0-9.]+/[0-9.]+";
     private final static String SIZE_REGEX = "[0-9.]+[ ]?x[ ]?[0-9.]+[ ]?x[ ]?[0-9.]+";
     private final static Integer MIN_FOR_POSITIVE_VALUES = 0;
 
+    private static VolumeValidator instance = new VolumeValidator();
     private VolumeDAO volumeDAO = new VolumeDAOImpl();
     private CoverDAO coverDAO = new CoverDAOImpl();
 

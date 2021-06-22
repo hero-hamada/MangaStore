@@ -27,23 +27,13 @@ public class DeleteGenreFromMangaService implements Service {
         if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, request.getSession())) {
             dispatcher = request.getRequestDispatcher(ERROR_JSP);
             dispatcher.forward(request, response);
-        }
-
-        if (request.getParameter(MANGA_ID).length() == EMPTY_REQUEST_LENGTH ||
-                request.getParameter(GENRE_ID).length() == EMPTY_REQUEST_LENGTH
-        ) {
-            request.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
         } else {
             Long mangaID = Long.valueOf(request.getParameter(MANGA_ID));
             Integer genreID = Integer.valueOf(request.getParameter(GENRE_ID));
-            if (!mangaToGenreDAO.isPairExists(mangaID, genreID)) {
-                request.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
-                serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
-            } else {
+            if (mangaToGenreDAO.isPairExists(mangaID, genreID)) {
                 mangaToGenreDAO.delete(mangaID, genreID);
-                serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
             }
+            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
         }
     }
 }

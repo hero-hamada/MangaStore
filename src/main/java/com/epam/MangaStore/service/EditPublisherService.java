@@ -38,10 +38,9 @@ public class EditPublisherService implements Service {
                 publisherDAO.selectByID(publisher.getId()) == null
         ) {
             request.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
-            serviceFactory.getService(DISPLAY_ALL_PUBLISHERS_SERVICES).execute(request, response);
         } else {
             publisherDAO.update(publisher);
-            serviceFactory.getService(DISPLAY_ALL_PUBLISHERS_SERVICES).execute(request, response);
         }
+        serviceFactory.getService(DISPLAY_ALL_PUBLISHERS_SERVICES).execute(request, response);
     }
 }

@@ -76,8 +76,7 @@
             <div class="row">
                 <div class="form-group col-md-5">
                     <label><fmt:message key="li.binding"/></label>
-                    <input name="binding" type="text" pattern="[a-zA-Z0-9\s]+"
-                           class="form-control" required>
+                    <input name="binding" type="text" class="form-control" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label><fmt:message key="li.size"/></label>
