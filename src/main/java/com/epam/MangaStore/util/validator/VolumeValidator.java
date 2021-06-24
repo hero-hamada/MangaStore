@@ -44,12 +44,6 @@ public class VolumeValidator {
         return false;
     }
 
-    public boolean isHiddenParamsValid(HttpServletRequest request) throws SQLException {
-        Long volumeID = Long.valueOf(request.getParameter(VOLUME_ID));
-        Long coverID = Long.valueOf(request.getParameter(COVER_ID));
-        return volumeDAO.selectByID(volumeID) != null || coverDAO.selectCoverByID(coverID) != null;
-    }
-
     public boolean isEmptyParamExists(HttpServletRequest request) {
         return request.getParameter(TITLE).length() == EMPTY_REQUEST_LENGTH ||
                 request.getParameter(PAGE_COUNT).length() == EMPTY_REQUEST_LENGTH ||
