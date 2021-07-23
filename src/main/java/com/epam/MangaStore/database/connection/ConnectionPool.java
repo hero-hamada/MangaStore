@@ -38,14 +38,8 @@ public final class ConnectionPool {
         initPoolData();
     }
 
-    public static ConnectionPool getInstance() {
-        if (instance == null) {
-            synchronized (ConnectionPool.class) {
-                if (instance == null) {
-                    instance = new ConnectionPool();
-                }
-            }
-        }
+    public static synchronized ConnectionPool getInstance() {
+        if (instance == null) instance = new ConnectionPool();
         return instance;
     }
 
@@ -54,8 +48,7 @@ public final class ConnectionPool {
             Class.forName(driverName);
             connectionQueue = new ArrayBlockingQueue<>(poolSize);
             for (int i = 0; i < poolSize; i++) {
-                Connection connection = DriverManager.getConnection(url, user,
-                        password);
+                Connection connection = DriverManager.getConnection(url, user, password);
                 connectionQueue.add(connection);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -69,6 +62,7 @@ public final class ConnectionPool {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
             LOGGER.error(e);
+            Thread.currentThread().interrupt();
         }
         return connection;
     }
@@ -79,6 +73,7 @@ public final class ConnectionPool {
                 connectionQueue.put(connection);
             } catch (InterruptedException e) {
                 LOGGER.error(e);
+                Thread.currentThread().interrupt();
             }
         }
     }
