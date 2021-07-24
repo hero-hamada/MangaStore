@@ -43,7 +43,7 @@ public final class ConnectionPool {
         return instance;
     }
 
-    public void initPoolData() {
+    private void initPoolData() {
         try {
             Class.forName(driverName);
             connectionQueue = new ArrayBlockingQueue<>(poolSize);
@@ -56,7 +56,7 @@ public final class ConnectionPool {
         }
     }
 
-    public Connection takeConnection() {
+    public synchronized Connection takeConnection() {
         Connection connection = null;
         try {
             connection = connectionQueue.take();
@@ -67,7 +67,7 @@ public final class ConnectionPool {
         return connection;
     }
 
-    public void returnConnection(Connection connection) {
+    public synchronized void returnConnection(Connection connection) {
         if (connection != null && connectionQueue.size() <= poolSize) {
             try {
                 connectionQueue.put(connection);
