@@ -1,5 +1,6 @@
 package com.epam.MangaStore.database.connection;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.util.concurrent.BlockingQueue;
 public final class ConnectionPool {
 
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
-    private static ConnectionPool instance;
+    private static volatile ConnectionPool instance;
 
     private BlockingQueue<Connection> connectionQueue;
 
@@ -38,9 +39,16 @@ public final class ConnectionPool {
         initPoolData();
     }
 
-    public static synchronized ConnectionPool getInstance() {
-        if (instance == null) instance = new ConnectionPool();
-        return instance;
+    public static ConnectionPool getInstance() {
+        ConnectionPool localInstance = instance;
+        if (localInstance == null) {
+            synchronized (ConnectionPool.class) {
+                localInstance = instance;
+                if (localInstance == null)
+                    instance = localInstance = new ConnectionPool();
+            }
+        }
+        return localInstance;
     }
 
     private void initPoolData() {
@@ -61,7 +69,7 @@ public final class ConnectionPool {
         try {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
-            LOGGER.error(e);
+            LOGGER.log(Level.WARN, "Interrupted!", e);
             Thread.currentThread().interrupt();
         }
         return connection;
@@ -72,7 +80,7 @@ public final class ConnectionPool {
             try {
                 connectionQueue.put(connection);
             } catch (InterruptedException e) {
-                LOGGER.error(e);
+                LOGGER.log(Level.WARN, "Interrupted!", e);
                 Thread.currentThread().interrupt();
             }
         }
