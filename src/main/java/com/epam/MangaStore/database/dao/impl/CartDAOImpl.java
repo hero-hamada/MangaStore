@@ -65,7 +65,7 @@ public class CartDAOImpl implements CartDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 cartItem = getCartItemByResultSet(resultSet);
             }
         } finally {

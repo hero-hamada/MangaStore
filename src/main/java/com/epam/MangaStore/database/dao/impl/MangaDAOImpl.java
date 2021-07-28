@@ -100,7 +100,7 @@ public class MangaDAOImpl implements MangaDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_MANGA_BY_ID)) {
             preparedStatement.setLong(1, mangaID);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 manga = getMangaByResultSet(resultSet);
             }
         } finally {

@@ -47,7 +47,7 @@ public class EditMangaService implements Service {
 
         if (mangaValidator.isEmptyParamExists(request)) {
             displayErrorMessage(request, response, EMPTY_FIELD_ERROR);
-        } else if (languageDAO.isLanguageExists(Integer.valueOf(request.getParameter(LANGUAGE_ID)))) {
+        } else if (!languageDAO.isLanguageExists(Integer.valueOf(request.getParameter(LANGUAGE_ID)))) {
             displayErrorMessage(request, response, LANGUAGE_NOT_EXISTS_ERROR);
         } else if (publisherDAO.selectPublisherByName(request.getParameter(PUBLISHER_NAME)) == null) {
             displayErrorMessage(request, response, PUBLISHER_NOT_EXISTS_ERROR);

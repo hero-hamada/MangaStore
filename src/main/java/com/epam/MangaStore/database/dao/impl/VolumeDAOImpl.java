@@ -87,7 +87,7 @@ public class VolumeDAOImpl implements VolumeDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_VOLUME_BY_ID)) {
             preparedStatement.setLong(1, volumeID);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 volume = getVolumeByResultSet(resultSet);
             }
         } finally {

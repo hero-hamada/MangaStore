@@ -23,7 +23,7 @@ public class LanguageDAOImpl implements LanguageDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ID_BY_NAME)) {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 id = resultSet.getInt("id");
             }
         } finally {
@@ -35,13 +35,11 @@ public class LanguageDAOImpl implements LanguageDAO {
     public boolean isLanguageExists(Integer id) throws SQLException {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
-        boolean isExists = false;
+        boolean isExists;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                isExists = resultSet.next();
-            }
+            isExists = resultSet.next();
         } finally {
             connectionPool.returnConnection(connection);
         }

@@ -34,9 +34,7 @@ public class EditPublisherService implements Service {
 
         Publisher publisher = publisherBuilder.fillToUpdate(request);
 
-        if (publisher.getName().length() == EMPTY_REQUEST_LENGTH ||
-                publisherDAO.selectByID(publisher.getId()) == null
-        ) {
+        if (publisher.getName().length() == EMPTY_REQUEST_LENGTH || publisherDAO.selectByID(publisher.getId()) == null) {
             request.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
         } else {
             publisherDAO.update(publisher);

@@ -40,7 +40,7 @@ public class GenreDAOImpl implements GenreDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
             preparedStatement.setInt(1, genreID);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 genre = getGenreByResultSet(resultSet);
             }
         } finally {

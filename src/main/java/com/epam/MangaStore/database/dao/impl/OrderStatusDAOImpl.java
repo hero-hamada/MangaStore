@@ -52,7 +52,7 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
             preparedStatement.setLong(1, statusID);
             preparedStatement.setInt(2, localeID);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 orderStatus = getMangaStatusByResultSet(resultSet);
             }
         } finally {

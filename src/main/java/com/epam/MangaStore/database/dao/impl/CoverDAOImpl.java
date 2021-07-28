@@ -40,7 +40,7 @@ public class CoverDAOImpl implements CoverDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COVER_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 cover = resultSet.getBytes("cover");
             }
         } finally {

@@ -78,7 +78,7 @@ public class AuthorDAOImpl implements AuthorDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_AUTHOR_BY_ID)) {
             preparedStatement.setLong(1, authorID);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 author = getAuthorByResultSet(resultSet);
             }
         } finally {
@@ -113,7 +113,7 @@ public class AuthorDAOImpl implements AuthorDAO {
             preparedStatement.setString(2, author.getMiddleName());
             preparedStatement.setString(3, author.getLastName());
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 id = resultSet.getLong("id");
             }
         } finally {

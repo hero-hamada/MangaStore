@@ -91,7 +91,7 @@ public class OrderDAOImpl implements OrderDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDER_BY_ID)) {
             preparedStatement.setLong(1, orderID);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 order = getOrderByResultSet(resultSet);
             }
         } finally {

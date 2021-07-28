@@ -10,7 +10,7 @@ public interface UserDAO {
 
     Long insert(User user) throws SQLException;
 
-    void updateUserAccess(Integer status, Boolean isBanned, Long id) throws SQLException;
+    void updateUserAccess(User user) throws SQLException;
 
     User selectUserByEmailPassword(String email, String password) throws SQLException;
 

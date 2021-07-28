@@ -69,15 +69,14 @@ public class UserDAOImpl implements UserDAO {
         return generatedID;
     }
 
-
     @Override
-    public void updateUserAccess(Integer status, Boolean isBanned, Long id) throws SQLException {
+    public void updateUserAccess(User user) throws SQLException {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_ACCESS)) {
-            preparedStatement.setBoolean(1, isBanned);
-            preparedStatement.setInt(2, status);
-            preparedStatement.setLong(3, id);
+            preparedStatement.setBoolean(1, user.isBanned());
+            preparedStatement.setInt(2, user.getStatusID());
+            preparedStatement.setLong(3, user.getId());
             preparedStatement.executeUpdate();
         } finally {
             connectionPool.returnConnection(connection);
@@ -109,7 +108,7 @@ public class UserDAOImpl implements UserDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 user = getUserByResultSet(resultSet);
             }
         } finally {
@@ -145,7 +144,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 user = getUserByResultSet(resultSet);
             }
         } finally {

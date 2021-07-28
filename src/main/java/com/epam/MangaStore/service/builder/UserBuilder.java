@@ -2,8 +2,8 @@ package com.epam.MangaStore.service.builder;
 
 import com.epam.MangaStore.entity.User;
 import org.apache.commons.codec.digest.DigestUtils;
-
 import javax.servlet.http.HttpServletRequest;
+
 
 import static com.epam.MangaStore.constants.Constants.*;
 
@@ -44,6 +44,14 @@ public class UserBuilder {
         newUser.setPassword(DigestUtils.md5Hex(request.getParameter(USER_PASSWORD)));
         newUser.setOldPassword(DigestUtils.md5Hex(request.getParameter(OLD_PASSWORD)));
         return newUser;
+    }
+
+    public User fillToUpdateAccess(HttpServletRequest request) {
+        User user = new User();
+        user.setId(Long.valueOf(request.getParameter(USER_ID)));
+        user.setStatusID(Integer.valueOf(request.getParameter(STATUS_ID)));
+        user.setBanned(Boolean.parseBoolean(request.getParameter(IS_USER_BANNED)));
+        return user;
     }
 
     public static UserBuilder getInstance() {

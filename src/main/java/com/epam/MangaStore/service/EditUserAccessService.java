@@ -4,6 +4,7 @@ import com.epam.MangaStore.database.dao.impl.AccessStatusDAOImpl;
 import com.epam.MangaStore.database.dao.interfaces.AccessStatusDAO;
 import com.epam.MangaStore.database.dao.interfaces.UserDAO;
 import com.epam.MangaStore.database.dao.impl.UserDAOImpl;
+import com.epam.MangaStore.service.builder.UserBuilder;
 import com.epam.MangaStore.service.factory.ServiceFactory;
 import com.epam.MangaStore.util.validator.AccessValidator;
 
@@ -20,6 +21,7 @@ import static com.epam.MangaStore.constants.Constants.*;
 public class EditUserAccessService implements Service {
 
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
+    private UserBuilder userBuilder = UserBuilder.getInstance();
     private UserDAO userDAO = new UserDAOImpl();
     private AccessStatusDAO accessStatusDAO = new AccessStatusDAOImpl();
     private RequestDispatcher dispatcher;
@@ -32,12 +34,9 @@ public class EditUserAccessService implements Service {
             dispatcher.forward(request, response);
         }
 
-        Integer userStatusID = Integer.valueOf(request.getParameter(STATUS_ID));
-        Boolean isUserBanned = Boolean.parseBoolean(request.getParameter(IS_USER_BANNED));
-        Long userID = Long.valueOf(request.getParameter(USER_ID));
-
-        if (userDAO.selectByID(userID) != null && accessStatusDAO.isAccessStatusExists(userStatusID)) {
-            userDAO.updateUserAccess(userStatusID, isUserBanned, userID);
+        if (userDAO.selectByID(Long.valueOf(request.getParameter(USER_ID))) != null &&
+                accessStatusDAO.isAccessStatusExists(Integer.valueOf(request.getParameter(STATUS_ID)))) {
+            userDAO.updateUserAccess(userBuilder.fillToUpdateAccess(request));
         }
 
         serviceFactory.getService(DISPLAY_ALL_USERS_SERVICE).execute(request, response);

@@ -67,7 +67,7 @@ public class PublisherDAOImpl implements PublisherDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PUBLISHER_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 publisher = getPublisherByResultSet(resultSet);
             }
         } finally {
@@ -100,7 +100,7 @@ public class PublisherDAOImpl implements PublisherDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PUBLISHER_BY_NAME)) {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 publisher = getPublisherByResultSet(resultSet);
             }
         } finally {
