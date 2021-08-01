@@ -7,6 +7,7 @@ import com.epam.MangaStore.entity.Manga;
 import com.epam.MangaStore.entity.Volume;
 import com.epam.MangaStore.service.builder.MangaBuilder;
 import com.epam.MangaStore.service.builder.VolumeBuilder;
+import com.epam.MangaStore.service.factory.ServiceFactory;
 import com.epam.MangaStore.util.validator.AccessValidator;
 
 import javax.servlet.RequestDispatcher;
@@ -23,32 +24,23 @@ import static com.epam.MangaStore.constants.Constants.*;
 
 public class DisplayAllVolumesService implements Service {
 
-    private MangaBuilder mangaBuilder = MangaBuilder.getInstance();
     private VolumeBuilder volumeBuilder = VolumeBuilder.getInstance();
-    private GenreDAO genreDAO = new GenreDAOImpl();
     private RequestDispatcher dispatcher;
+    private ServiceFactory serviceFactory = ServiceFactory.getInstance();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException, SQLException {
 
         HttpSession session = request.getSession();
-        Integer localeID = (Integer) session.getAttribute(LOCALE_ID);
 
         if (AccessValidator.isAccessDenied(ROLE_ADMIN_ID, session)) {
             dispatcher = request.getRequestDispatcher(SIGN_IN_JSP);
             dispatcher.forward(request, response);
         }
-
         Long mangaID = Long.valueOf(request.getParameter(MANGA_ID));
-
         List<Volume> volumes = volumeBuilder.fillAllToDisplay(mangaID);
-        List<Genre> genres = genreDAO.selectAll(localeID);
-        Manga manga = mangaBuilder.fillOneToDisplay(mangaID, localeID);
-        manga.setVolumes(volumes);
+        request.setAttribute(VOLUMES, volumes);
 
-        request.setAttribute(MANGA, manga);
-        request.setAttribute(GENRES, genres);
-        dispatcher = request.getRequestDispatcher(VOLUMES_JSP);
-        dispatcher.forward(request, response);
+        serviceFactory.getService(PREPARE_VOLUMES_PAGE_SERVICE).execute(request, response);
     }
 }

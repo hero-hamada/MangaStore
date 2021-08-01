@@ -42,16 +42,16 @@ public class AddAuthorToMangaService implements Service {
 
         if (mangaDAO.selectByID(mangaID) == null) {
             request.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         } else if (authorID == null) {
             request.setAttribute(AUTHOR_NAME_ERROR, ERROR_OCCURRED);
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         } else if (mangaToAuthorDAO.isPairExists(mangaID, authorID)) {
             request.setAttribute(NOT_UNIQUE_MANGA_AUTHOR_ERROR, ERROR_OCCURRED);
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         } else {
             mangaToAuthorDAO.insert(mangaID, authorID);
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         }
     }
 }

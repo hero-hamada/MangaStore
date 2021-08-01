@@ -1,5 +1,6 @@
 package com.epam.MangaStore.constants;
 
+
 public class Constants {
 
     public final static Integer ROLE_USER_ID = 0;
@@ -11,14 +12,9 @@ public class Constants {
     public final static Integer ORDER_STATUS_IN_PROCESSING = 1;
     public final static Long DEFAULT_COVER_ID = 7L;
     public final static Integer DEFAULT_CART_ITEM_QUANTITY = 1;
-    public final static Integer GENRE_ALL_ID = 0;
     public final static Integer EMPTY_REQUEST_LENGTH = 0;
     public final static Integer MIN_IMAGE_SIZE = 0;
     public final static Integer MAX_IMAGE_SIZE = 10 * 1024 * 1024;
-
-    public Integer getGenreIDAll() {
-        return GENRE_ALL_ID;
-    }
 
     public Integer getRoleUserID() {
         return ROLE_USER_ID;
@@ -49,6 +45,7 @@ public class Constants {
     public final static String SIGN_IN_SERVICE = "/SignIn";
     public final static String SIGN_OUT_SERVICE = "/SignOut";
     public final static String SEARCH_SERVICE = "/Search";
+    public final static String SORT_VOLUMES_SERVICE = "/SortVolumes";
     public final static String CHANGE_LOCALE_SERVICE = "/ChangeLocale";
     public final static String ADD_VOLUME_SERVICE = "/AddVolume";
     public final static String ADD_MANGA_SERVICE = "/AddManga";
@@ -56,10 +53,8 @@ public class Constants {
     public final static String ADD_TO_CART_SERVICE = "/AddToCart";
     public final static String ADD_NEW_PUBLISHER_SERVICE = "/AddNewPublisher";
     public final static String DISPLAY_ALL_USERS_SERVICE = "/DisplayAllUsers";
-    public final static String DISPLAY_ALL_VOLUMES_SERVICE = "/DisplayAllVolumes";
     public final static String DISPLAY_ALL_ORDERS_SERVICES = "/DisplayAllOrders";
     public final static String DISPLAY_ALL_AUTHORS_SERVICES = "/DisplayAllAuthors";
-    public final static String DISPLAY_ACTIVE_VOLUMES_SERVICE = "/DisplayActiveVolumes";
     public final static String DISPLAY_MY_ORDERS_SERVICES = "/DisplayMyOrders";
     public final static String DISPLAY_CART_SERVICE = "/DisplayCart";
     public final static String DISPLAY_ALL_PUBLISHERS_SERVICES = "/DisplayAllPublishers";
@@ -70,6 +65,7 @@ public class Constants {
     public final static String PREPARE_EDIT_MANGA_PAGE_SERVICE = "/PrepareEditMangaPage";
     public final static String PREPARE_ADD_MANGA_PAGE_SERVICE = "/PrepareAddMangaPage";
     public final static String PREPARE_MANGAS_PAGE_SERVICE = "/PrepareMangasPage";
+    public final static String PREPARE_VOLUMES_PAGE_SERVICE = "/PrepareVolumesPage";
     public final static String EDIT_VOLUME_SERVICE = "/EditVolume";
     public final static String EDIT_ORDER_STATUS_SERVICE = "/EditOrderStatus";
     public final static String EDIT_USER_ACCESS_SERVICE = "/EditUserAccess";
@@ -144,6 +140,11 @@ public class Constants {
     public final static String KEY_ERROR_USER_NOT_EXISTS = "small.error.user.not.exists";
     public final static String KEY_ERROR_POSTAL_CODE_FORMAT = "small.error.postal.format";
     public final static String KEY_ERROR_PHONE_FORMAT = "small.error.phone.format";
+    public final static String KEY_NUMBER_ASC = "select.number.asc";
+    public final static String KEY_NUMBER_DESC = "select.number.desc";
+    public final static String KEY_TITLE = "select.title";
+    public final static String KEY_PRICE_ASC = "select.price.asc";
+    public final static String KEY_PRICE_DESC = "select.price.desc";
 
     public final static String LOCALE = "locale";
     public final static String LOCALE_ID = "localeID";
@@ -182,8 +183,12 @@ public class Constants {
     public final static String COVER = "cover";
     public final static String ACCESS_STATUS_ID = "accessStatusID";
     public final static String VOLUME = "volume";
+    public final static String VOLUMES = "volumes";
     public final static String VOLUME_ID = "volumeID";
     public final static String COVER_ID = "coverID";
+    public final static String SORT_TYPE = "sortType";
+    public final static String SORT_TYPES = "sortTypes";
+    public final static String SELECTED_SORT_TYPE = "selectedSortType";
 
     public final static String CART_ITEM_ID = "cartItemID";
     public final static String CART_TOTAL_PRICE = "cartTotalPrice";
@@ -198,6 +203,7 @@ public class Constants {
 
     public final static String GENRES = "genres";
     public final static String GENRE_ID = "genreID";
+    public final static String CHECKED_GENRE_IDS = "checkedGenreIDs";
     public final static String RELEASING_STATUSES = "releasingStatuses";
 
     public final static String AUTHORS = "authors";

@@ -1,18 +1,15 @@
 package com.epam.MangaStore.util.validator;
 
-import com.epam.MangaStore.database.dao.impl.CoverDAOImpl;
 import com.epam.MangaStore.database.dao.impl.VolumeDAOImpl;
-import com.epam.MangaStore.database.dao.interfaces.CoverDAO;
 import com.epam.MangaStore.database.dao.interfaces.VolumeDAO;
 import com.epam.MangaStore.entity.Volume;
-import com.epam.MangaStore.util.ImageManager;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 import static com.epam.MangaStore.constants.Constants.*;
+
 
 public class VolumeValidator {
 
@@ -23,7 +20,6 @@ public class VolumeValidator {
 
     private static VolumeValidator instance = new VolumeValidator();
     private VolumeDAO volumeDAO = new VolumeDAOImpl();
-    private CoverDAO coverDAO = new CoverDAOImpl();
 
     public boolean isISBNInvalid(String isbn) throws SQLException {
         return !Pattern.matches(ISBN_REGEX, isbn) || volumeDAO.isISBNExists(isbn);

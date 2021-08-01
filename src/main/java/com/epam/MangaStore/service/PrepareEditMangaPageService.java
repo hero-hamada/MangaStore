@@ -42,7 +42,7 @@ public class PrepareEditMangaPageService implements Service {
         Long mangaID = Long.valueOf(request.getParameter(MANGA_ID));
 
         if (mangaDAO.selectByID(mangaID) == null) {
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         } else {
             Integer localID = (Integer) session.getAttribute(LOCALE_ID);
             List<ReleasingStatus> releasingStatuses = releasingStatusDAO.selectAll(localID);

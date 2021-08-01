@@ -108,14 +108,14 @@
                                 selected
                             </c:if>
                     >
-                        <fmt:message key="select.user.status.active"/>
+                        <fmt:message key="select.status.active"/>
                     </option>
                     <option value="${Constants.accessStatusDeletedID}"
                             <c:if test="${requestScope.manga.accessStatusID eq Constants.accessStatusDeletedID}">
                                 selected
                             </c:if>
                     >
-                        <fmt:message key="select.user.status.deactive"/>
+                        <fmt:message key="select.status.deleted"/>
                     </option>
                 </select>
             </div>

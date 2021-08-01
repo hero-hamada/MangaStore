@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import static com.epam.MangaStore.constants.Constants.*;
-import static com.epam.MangaStore.constants.Constants.DISPLAY_ALL_VOLUMES_SERVICE;
+import static com.epam.MangaStore.constants.Constants.SORT_VOLUMES_SERVICE;
 
 public class DeleteAuthorFromMangaService implements Service {
 
@@ -34,7 +34,7 @@ public class DeleteAuthorFromMangaService implements Service {
             if (mangaToAuthorDAO.isPairExists(mangaID, authorID)) {
                 mangaToAuthorDAO.delete(mangaID, authorID);
             }
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         }
     }
 }

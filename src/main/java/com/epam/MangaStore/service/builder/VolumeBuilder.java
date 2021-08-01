@@ -1,14 +1,18 @@
 package com.epam.MangaStore.service.builder;
 
+import com.epam.MangaStore.constants.SortType;
 import com.epam.MangaStore.database.dao.impl.*;
 import com.epam.MangaStore.database.dao.interfaces.CoverDAO;
 import com.epam.MangaStore.database.dao.interfaces.VolumeDAO;
+import com.epam.MangaStore.entity.Manga;
 import com.epam.MangaStore.entity.Volume;
 import com.epam.MangaStore.util.ImageManager;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.epam.MangaStore.constants.Constants.*;
@@ -55,14 +59,6 @@ public class VolumeBuilder {
         return volumes;
     }
 
-    public List<Volume> fillActivesToDisplayAll(Long mangaID) throws SQLException {
-        List<Volume> volumes = volumeDAO.selectActiveVolumesByMangaID(mangaID);
-        for (Volume volume : volumes) {
-            setCover(volume, volume.getCoverID());
-        }
-        return volumes;
-    }
-
     public Volume fillToUpdate(HttpServletRequest request) throws SQLException {
         Volume volume = fillNew(request);
         volume.setId(Long.valueOf(request.getParameter(VOLUME_ID)));
@@ -70,6 +66,35 @@ public class VolumeBuilder {
         setCover(volume, Long.valueOf(request.getParameter(COVER_ID)));
         volume.setAccessStatusID(Integer.valueOf(request.getParameter(ACCESS_STATUS_ID)));
         return volume;
+    }
+
+    public List<Volume> getActive(List<Volume> volumes) {
+        List<Volume> activeVolumes = new ArrayList<>();
+        for (Volume volume : volumes) {
+            if (volume.getAccessStatusID().equals(ACCESS_STATUS_ACTIVE_ID))
+                activeVolumes.add(volume);
+        }
+        return activeVolumes;
+    }
+
+    public void sortByType(List<Volume> volumes, SortType sortType) {
+        switch (sortType) {
+            case PRICE_ASC:
+                volumes.sort(Comparator.comparing(Volume::getPrice));
+                break;
+            case PRICE_DESC:
+                volumes.sort(Comparator.comparing(Volume::getPrice, Comparator.reverseOrder()));
+                break;
+            case NUMBER_ASC:
+                volumes.sort(Comparator.comparing(Volume::getNumber));
+                break;
+            case NUMBER_DESC:
+                volumes.sort(Comparator.comparing(Volume::getNumber, Comparator.reverseOrder()));
+                break;
+            case TITLE:
+                volumes.sort(Comparator.comparing(Volume::getTitle));
+                break;
+        }
     }
 
     public void setCover(Volume volume, Long coverID) throws SQLException {

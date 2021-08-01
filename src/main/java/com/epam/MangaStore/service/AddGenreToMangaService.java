@@ -38,7 +38,7 @@ public class AddGenreToMangaService implements Service {
             dispatcher.forward(request, response);
         } else if (genreValidator.isEmptyParamExists(request)) {
             request.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         } else {
             List<Integer> genreIDs = Stream.of(request.getParameterValues(GENRE_ID)).map(Integer::valueOf)
                     .collect(Collectors.toList());
@@ -52,7 +52,7 @@ public class AddGenreToMangaService implements Service {
             } else {
                 request.setAttribute(HIDDEN_INPUT_ERROR, ERROR_OCCURRED);
             }
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         }
     }
 }

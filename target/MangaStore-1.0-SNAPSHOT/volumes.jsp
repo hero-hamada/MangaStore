@@ -108,17 +108,22 @@
                     <li>
                         <form action="AddAuthorToManga" method="post">
                             <input type="hidden" name="mangaID" value="${requestScope.manga.id}" required>
-                            <input type="text" name="firstName" class="form-control" placeholder="first name" required>
-                            <input type="text" name="middleName" class="form-control" placeholder="middle name">
-                            <input type="text" name="lastName" class="form-control" placeholder="last name">
+                            <input type="text" name="firstName" class="form-control"
+                                   placeholder="<fmt:message key="th.name.first"/>" required>
+                            <input type="text" name="middleName" class="form-control"
+                                   placeholder="<fmt:message key="th.name.middle"/>">
+                            <input type="text" name="lastName" class="form-control"
+                                   placeholder="<fmt:message key="th.name.last"/>">
                             <br>
                             <c:if test="${not empty requestScope.notUniqueMangaAuthorError}">
-                                <small class="form-text text-danger"><fmt:message
-                                        key="small.error.author.exists"/></small>
+                                <small class="form-text text-danger">
+                                    <fmt:message key="small.error.author.exists"/>
+                                </small>
                             </c:if>
                             <c:if test="${not empty requestScope.authorNameError}">
-                                <small class="form-text text-danger"><fmt:message
-                                        key="small.error.author.name"/></small>
+                                <small class="form-text text-danger">
+                                    <fmt:message key="small.error.author.name"/>
+                                </small>
                             </c:if>
                             <br>
                             <button style="width: 100%" type="submit" class="btn btn-outline-primary">
@@ -161,6 +166,26 @@
                                 </form>
                             </li>
                         </c:if>
+                        <li class="nav-item">
+                            <label class="btn-link"><i class="fas fa-sort"></i><fmt:message key="li.sort"/></label>
+                        </li>
+                        <li class="nav-item">
+                            <form action="SortVolumes" method="get">
+                                <input type="hidden" name="mangaID" value="${requestScope.manga.id}"
+                                       class="form-control" required>
+                                <select name="sortType" class="form-control" onchange="this.form.submit();">
+                                    <c:forEach items="${requestScope.sortTypes}" var="sortType">
+                                        <option value="${sortType}"
+                                                <c:if test="${requestScope.selectedSortType eq sortType}">
+                                                    selected
+                                                </c:if>
+                                        >
+                                            <fmt:message key="${sortType.key}"/>
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </form>
+                        </li>
                         <c:if test="${sessionScope.user.roleID eq Constants.roleUserID}">
                             <li class="nav-item btn-link">
                                 <fmt:message key="title.volumes"/>
@@ -169,7 +194,7 @@
                     </ul>
                 </div>
                 <div class="card-body">
-                    <c:forEach items="${requestScope.manga.volumes}" var="volume">
+                    <c:forEach items="${requestScope.volumes}" var="volume">
                         <div class="row g-2 mt-3">
                             <div class="col-md-3">
                                 <img src="data:image/jpeg;base64,${volume.cover}" alt="cover" class="img-fluid"/>
@@ -180,6 +205,20 @@
                                         <fmt:message key="head.vol"/> <span>${volume.number}</span>: ${volume.title}
                                     </h5>
                                     <ul class="list-items">
+                                        <c:if test="${sessionScope.user.roleID eq Constants.roleAdminID}">
+                                            <li><fmt:message key="th.status"/>:
+                                                <span class="text-danger">
+                                                    <c:choose>
+                                                        <c:when test="${volume.accessStatusID eq Constants.accessStatusActiveID}">
+                                                            <fmt:message key="select.status.active"/>
+                                                        </c:when>
+                                                        <c:when test="${volume.accessStatusID eq Constants.accessStatusDeletedID}">
+                                                            <fmt:message key="select.status.deleted"/>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </span>
+                                            </li>
+                                        </c:if>
                                         <li>ISBN: <span>${volume.isbn}</span></li>
                                         <li><fmt:message key="li.pageCount"/>: <span>${volume.pageCount}</span></li>
                                         <li><fmt:message key="li.format"/>: <span>${volume.format}</span></li>

@@ -33,7 +33,7 @@ public class DeleteGenreFromMangaService implements Service {
             if (mangaToGenreDAO.isPairExists(mangaID, genreID)) {
                 mangaToGenreDAO.delete(mangaID, genreID);
             }
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         }
     }
 }

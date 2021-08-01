@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.epam.MangaStore.constants.Constants.*;
 
@@ -45,7 +46,6 @@ public class MangaBuilder {
     }
 
     public Manga fillOneToDisplay(Long mangaID, Integer localID) throws SQLException {
-
         Manga manga = mangaDAO.selectByID(mangaID);
         manga.setAuthors(authorDAO.selectAllAuthorsByMangaID(mangaID));
         manga.setGenres(genreDAO.selectGenresByMangaLanguageID(mangaID, localID));
@@ -67,9 +67,13 @@ public class MangaBuilder {
         return mangas;
     }
 
-    public List<Manga> fillByFilter(Integer genreID, Integer localID) throws SQLException {
-        List<Manga> mangas = mangaDAO.selectAllByFilter(genreID, localID);
+    public List<Manga> fillByFilter(List<Integer> genreIDs, Integer localID) throws SQLException {
+        List<Manga> mangas = new ArrayList<>();
+        for (Integer genreID : genreIDs) {
+            mangas.addAll(mangaDAO.selectAllByFilter(genreID, localID));
+        }
         fillGiven(mangas, localID);
+        mangas = mangas.stream().distinct().collect(Collectors.toList());
         return mangas;
     }
 
@@ -99,6 +103,9 @@ public class MangaBuilder {
     private void fillGiven(List<Manga> mangas, Integer localID) throws SQLException {
         for (Manga manga : mangas) {
             manga.setReleaseStatus(releasingStatusDAO.selectByID(manga.getReleaseStatusID(), localID));
+            manga.setAuthors(authorDAO.selectAllAuthorsByMangaID(manga.getId()));
+            manga.setGenres(genreDAO.selectGenresByMangaLanguageID(manga.getId(), localID));
+            manga.setPublisher(publisherDAO.selectByID(manga.getPublisherID()));
             setCover(manga, manga.getCoverID());
         }
     }

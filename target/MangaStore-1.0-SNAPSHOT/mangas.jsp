@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page isELIgnored="false" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization"/>
@@ -40,15 +41,10 @@
                         <h3 class="card-title"><fmt:message key="head.select.category"/></h3>
                         <hr/>
                         <label class="card-title"></label>
-                        <div class="form-check form-check-inline">
-                            <input name="genreID" type="radio" class="form-check-input" value="${Constants.genreIDAll}"
-                                   <c:if test="${empty requestScope.genreID}">checked</c:if>>
-                            <label class="form-check-label"><fmt:message key="label.all"/></label>
-                        </div>
                         <c:forEach items="${requestScope.genres}" var="genre">
                             <div class="form-check form-check-inline">
-                                <input name="genreID" type="radio" value="${genre.id}" class="form-check-input"
-                                <c:if test="${genre.id eq requestScope.genreID}">checked</c:if>>
+                                <input name="genreID" type="checkbox" value="${genre.id}" class="form-check-input"
+                                       <c:if test="${fn:containsIgnoreCase(requestScope.checkedGenreIDs, genre.id)}">checked</c:if>>
                                 <label class="form-check-label">${genre.name}</label>
                             </div>
                         </c:forEach>
@@ -71,19 +67,22 @@
                                 <h6 class="card-title">${manga.title}</h6>
                                 <p class="card-text text-primary">${manga.releaseStatus.name}</p>
                                 <c:if test="${sessionScope.user.roleID eq Constants.roleAdminID}">
-                                    <form action="DisplayAllVolumes" method="get">
-                                        <input type="hidden" name="mangaID" value="${manga.id}">
-                                        <input type="submit" class="btn btn-outline-primary"
-                                               value="<fmt:message key="button.viewMore"/>">
-                                    </form>
+                                    <p class="card-text text-danger">
+                                        <c:choose>
+                                            <c:when test="${manga.accessStatusID eq Constants.accessStatusActiveID}">
+                                                <fmt:message key="select.status.active"/>
+                                            </c:when>
+                                            <c:when test="${manga.accessStatusID eq Constants.accessStatusDeletedID}">
+                                                <fmt:message key="select.status.deleted"/>
+                                            </c:when>
+                                        </c:choose>
+                                    </p>
                                 </c:if>
-                                <c:if test="${sessionScope.user.roleID ne Constants.roleAdminID}">
-                                    <form action="DisplayActiveVolumes" method="get">
-                                        <input type="hidden" name="mangaID" value="${manga.id}">
-                                        <input type="submit" class="btn btn-outline-primary"
-                                               value="<fmt:message key="button.viewMore"/> ">
-                                    </form>
-                                </c:if>
+                                <form action="SortVolumes" method="get">
+                                    <input type="hidden" name="mangaID" value="${manga.id}">
+                                    <input type="submit" class="btn btn-outline-primary"
+                                           value="<fmt:message key="button.viewMore"/>">
+                                </form>
                             </div>
                         </div>
                     </c:forEach>

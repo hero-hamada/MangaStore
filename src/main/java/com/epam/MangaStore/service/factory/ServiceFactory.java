@@ -12,8 +12,7 @@ public class ServiceFactory {
     private static final Map<String, Service> SERVICE_MAP = new HashMap<>();
     private static final ServiceFactory SERVICE_FACTORY = new ServiceFactory();
 
-    public static ServiceFactory getInstance() {
-        return SERVICE_FACTORY;
+    private ServiceFactory() {
     }
 
     static {
@@ -22,7 +21,8 @@ public class ServiceFactory {
         SERVICE_MAP.put(SIGN_IN_SERVICE, new SignInService());
         SERVICE_MAP.put(SIGN_OUT_SERVICE, new SignOutService());
         SERVICE_MAP.put(SEARCH_SERVICE, new SearchService());
-        SERVICE_MAP.put(CHANGE_LOCALE_SERVICE, new ChangeLocaleService());
+        SERVICE_MAP.put(SORT_VOLUMES_SERVICE, new SortVolumeService());
+        SERVICE_MAP.put(SET_QUANTITY_SERVICE, new SetQuantityService());
         SERVICE_MAP.put(EDIT_USER_ACCESS_SERVICE, new EditUserAccessService());
         SERVICE_MAP.put(EDIT_VOLUME_SERVICE, new EditVolumeService());
         SERVICE_MAP.put(EDIT_MANGA_SERVICE, new EditMangaService());
@@ -31,11 +31,9 @@ public class ServiceFactory {
         SERVICE_MAP.put(EDIT_PUBLISHER_SERVICE, new EditPublisherService());
         SERVICE_MAP.put(EDIT_PROFILE_SERVICE, new EditProfileService());
         SERVICE_MAP.put(DISPLAY_ALL_USERS_SERVICE, new DisplayAllUsersService());
-        SERVICE_MAP.put(DISPLAY_ALL_VOLUMES_SERVICE, new DisplayAllVolumesService());
         SERVICE_MAP.put(DISPLAY_ALL_AUTHORS_SERVICES, new DisplayAllAuthorsService());
         SERVICE_MAP.put(DISPLAY_ALL_PUBLISHERS_SERVICES, new DisplayAllPublishersService());
         SERVICE_MAP.put(DISPLAY_ALL_ORDERS_SERVICES, new DisplayAllOrdersService());
-        SERVICE_MAP.put(DISPLAY_ACTIVE_VOLUMES_SERVICE ,new DisplayActiveVolumesService());
         SERVICE_MAP.put(DISPLAY_CART_SERVICE, new DisplayCartService());
         SERVICE_MAP.put(DISPLAY_MY_ORDERS_SERVICES, new DisplayMyOrdersService());
         SERVICE_MAP.put(DELETE_CART_ITEM_SERVICE, new DeleteCartItemService());
@@ -53,10 +51,11 @@ public class ServiceFactory {
         SERVICE_MAP.put(PREPARE_EDIT_MANGA_PAGE_SERVICE, new PrepareEditMangaPageService());
         SERVICE_MAP.put(PREPARE_ADD_MANGA_PAGE_SERVICE, new PrepareAddMangaPageService());
         SERVICE_MAP.put(PREPARE_MANGAS_PAGE_SERVICE, new PrepareMangasPageService());
-        SERVICE_MAP.put(SET_QUANTITY_SERVICE, new SetQuantityService());
+        SERVICE_MAP.put(PREPARE_VOLUMES_PAGE_SERVICE, new PrepareVolumesPageService());
         SERVICE_MAP.put(CHECK_OUT_ALL_SERVICE, new CheckOutAllService());
         SERVICE_MAP.put(CHECK_OUT_SELECTED_SERVICE, new CheckOutSelectedService());
         SERVICE_MAP.put(CONFIRM_ORDER_SERVICE, new ConfirmOrderService());
+        SERVICE_MAP.put(CHANGE_LOCALE_SERVICE, new ChangeLocaleService());
         SERVICE_MAP.put(FILTER_MANGA_SERVICE, new FilterMangaService());
     }
 
@@ -70,5 +69,9 @@ public class ServiceFactory {
             }
         }
         return service;
+    }
+
+    public static ServiceFactory getInstance() {
+        return SERVICE_FACTORY;
     }
 }

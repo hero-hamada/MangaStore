@@ -166,22 +166,4 @@ public class VolumeDAOImpl implements VolumeDAO {
         }
         return isExists;
     }
-
-    @Override
-    public List<Volume> selectActiveVolumesByMangaID(Long mangaID) throws SQLException {
-        connectionPool = ConnectionPool.getInstance();
-        connection = connectionPool.takeConnection();
-
-        List<Volume> volumes = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ACTIVE_VOLUMES_BY_MANGA_ID)) {
-            preparedStatement.setLong(1, mangaID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                volumes.add(getVolumeByResultSet(resultSet));
-            }
-        } finally {
-            connectionPool.returnConnection(connection);
-        }
-        return volumes;
-    }
 }

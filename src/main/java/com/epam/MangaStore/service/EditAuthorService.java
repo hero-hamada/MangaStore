@@ -34,9 +34,7 @@ public class EditAuthorService implements Service {
 
         Author author = authorBuilder.fillToUpdate(request);
 
-        if (author.getFirstName().length() == EMPTY_REQUEST_LENGTH ||
-                authorDAO.selectByID(author.getId()) == null
-        ) {
+        if (author.getFirstName().length() == EMPTY_REQUEST_LENGTH || authorDAO.selectByID(author.getId()) == null) {
             request.setAttribute(EMPTY_FIELD_ERROR, ERROR_OCCURRED);
         } else {
             authorDAO.update(author);

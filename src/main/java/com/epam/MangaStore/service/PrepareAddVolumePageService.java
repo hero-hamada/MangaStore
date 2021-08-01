@@ -31,7 +31,7 @@ public class PrepareAddVolumePageService implements Service {
         Long mangaID = Long.valueOf(request.getParameter(MANGA_ID));
 
         if (mangaDAO.selectByID(mangaID) == null) {
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         } else {
             request.setAttribute(MANGA_ID, mangaID);
             dispatcher = request.getRequestDispatcher(ADD_VOLUME_JSP);

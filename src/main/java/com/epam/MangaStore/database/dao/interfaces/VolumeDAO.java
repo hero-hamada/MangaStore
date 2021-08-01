@@ -18,6 +18,4 @@ public interface VolumeDAO {
     boolean isISBNExists(String isbn) throws SQLException;
 
     boolean isMangaIDAndNumberExists(Long mangaID, Integer number) throws SQLException;
-
-    List<Volume> selectActiveVolumesByMangaID(Long mangaID) throws SQLException;
 }

@@ -34,7 +34,7 @@ public class PrepareEditVolumePageService implements Service {
         Long volumeID = Long.valueOf(request.getParameter(VOLUME_ID));
 
         if (volumeDAO.selectByID(volumeID) == null) {
-            serviceFactory.getService(DISPLAY_ALL_VOLUMES_SERVICE).execute(request, response);
+            serviceFactory.getService(SORT_VOLUMES_SERVICE).execute(request, response);
         } else {
             Volume volume = volumeBuilder.fillOneToDisplay(volumeID);
             request.setAttribute(VOLUME, volume);

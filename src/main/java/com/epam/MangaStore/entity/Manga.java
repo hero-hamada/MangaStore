@@ -93,18 +93,18 @@ public class Manga extends Book {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Manga manga = (Manga) o;
-        return description.equals(manga.description) && languageID.equals(manga.languageID) && publisherID.equals(manga.publisherID) && publisher.equals(manga.publisher) && releaseStatusID.equals(manga.releaseStatusID) && releaseStatus.equals(manga.releaseStatus) && volumes.equals(manga.volumes) && authors.equals(manga.authors) && genres.equals(manga.genres);
+        return description.equals(manga.description) && languageID.equals(manga.languageID) && publisherID.equals(manga.publisherID) && publisher.equals(manga.publisher) && releaseStatusID.equals(manga.releaseStatusID) && releaseStatus.equals(manga.releaseStatus) && authors.equals(manga.authors) && genres.equals(manga.genres);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), description, languageID, publisherID, publisher, releaseStatusID, releaseStatus, volumes, authors, genres);
+        return Objects.hash(super.hashCode(), description, languageID, publisherID, publisher, releaseStatusID, releaseStatus, authors, genres);
     }
 
     @Override
     public String toString() {
         return super.toString() + "Manga{" +
-                "description='" + description + '\'' +
+                "description=" + description +
                 ", languageID=" + languageID +
                 ", publisherID=" + publisherID +
                 ", publisher=" + publisher +
