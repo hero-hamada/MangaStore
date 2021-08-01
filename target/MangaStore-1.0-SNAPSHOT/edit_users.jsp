@@ -80,14 +80,14 @@
                                                     selected
                                                 </c:if>
                                         >
-                                            <fmt:message key="select.user.status.deactive"/>
+                                            <fmt:message key="select.status.deleted"/>
                                         </option>
                                         <option value="${Constants.accessStatusActiveID}"
                                                 <c:if test="${user.statusID eq Constants.accessStatusActiveID}">
                                                     selected
                                                 </c:if>
                                         >
-                                            <fmt:message key="select.user.status.active"/>
+                                            <fmt:message key="select.status.active"/>
                                         </option>
                                     </select>
                                 </td>
